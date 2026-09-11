@@ -7,723 +7,838 @@
 <title>Isuru Marasinghe</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap">
 <style>
-/* ============ tokens ============ */
+/* ============================================================
+   Tokens — Apple design system (light-dominant)
+   ============================================================ */
 :root{
-  --paper:#F2F0EA;         /* warm paper */
-  --paper-2:#E8E4DA;       /* raised paper */
-  --ink:#101011;           /* ink */
-  --ink-2:#1A1A1B;
-  --fg:#101011;
-  --fg-dim:#5D5951;        /* warm grey, biased to the gold */
-  --rule:rgba(16,16,17,.15);
-  --rule-soft:rgba(16,16,17,.08);
-  --accent:#A9761F;        /* rim-light gold */
-  --accent-2:#C9A15A;
-  --band-bg:#101011;       /* inverted band */
-  --band-fg:#F2F0EA;
-  --band-dim:#A09A8E;
-  --band-rule:rgba(242,240,234,.16);
-  --bg:var(--paper);
   color-scheme:light;
 
-  --sf:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
-  --f-display:var(--sf);
-  --f-body:var(--sf);
-  --f-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,"Segoe UI Mono",Consolas,monospace;
+  /* brand + interaction: one accent, no second colour */
+  --primary:#0066cc;
+  --primary-focus:#0071e3;
+  --primary-on-dark:#2997ff;
 
-  --gut:clamp(20px,5vw,80px);
-  --maxw:1220px;
-  --ease:cubic-bezier(.22,.61,.36,1);
+  /* surfaces */
+  --canvas:#ffffff;
+  --parchment:#f5f5f7;
+  --pearl:#fafafc;
+  --tile-1:#272729;
+  --tile-2:#2a2a2c;
+  --tile-3:#252527;
+  --black:#000000;
+
+  /* text */
+  --ink:#1d1d1f;
+  --ink-80:#333333;
+  --ink-48:#7a7a7a;
+  --on-dark:#ffffff;
+  --on-dark-muted:#cccccc;
+
+  /* lines */
+  --hairline:#e0e0e0;
+  --divider-soft:#f0f0f0;
+  --hairline-dark:rgba(255,255,255,.18);
+
+  /* the one shadow in the system — product imagery only */
+  --shadow-product:rgba(0,0,0,.22) 3px 5px 30px 0;
+
+  /* type */
+  --sf:"SF Pro Display","SF Pro Text",system-ui,-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,sans-serif;
+  --t-hero:clamp(28px,5.2vw,56px);
+  --t-display-lg:clamp(28px,3.5vw,40px);
+  --t-display-md:clamp(24px,2.8vw,34px);
+  --t-lead:clamp(21px,2.1vw,28px);
+  --t-lead-airy:clamp(19px,1.7vw,24px);
+  --t-tagline:21px;
+  --t-body:17px;
+  --t-caption:14px;
+  --t-fine:12px;
+
+  /* spacing */
+  --xxs:4px; --xs:8px; --sm:12px; --md:17px; --lg:24px; --xl:32px; --xxl:48px; --section:80px;
+  --gut:clamp(20px,4vw,40px);
+  --wide:1440px;
+  --text:980px;
+
+  --ease:cubic-bezier(.28,.11,.32,1);
 }
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 html.js{scroll-behavior:auto}
 body{
-  background:var(--bg); color:var(--fg);
-  font-family:var(--f-body); font-size:clamp(.97rem,.94rem + .18vw,1.04rem); line-height:1.62;
-  font-weight:400; letter-spacing:-.002em; margin:0; overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+  margin:0; background:var(--canvas); color:var(--ink);
+  font-family:var(--sf); font-size:var(--t-body); font-weight:400; line-height:1.45; letter-spacing:-.022em;
+  font-feature-settings:"ss03" 1; -webkit-font-smoothing:antialiased; overflow-x:hidden;
 }
 img{max-width:100%;display:block}
-a{color:inherit}
-::selection{background:var(--accent);color:var(--paper)}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--primary-focus);outline-offset:3px;border-radius:2px}
 
-/* ============ type ============ */
-.d1,.d2,h1,h2,h3{font-family:var(--f-display);font-weight:800;letter-spacing:-.035em;line-height:.94;text-wrap:balance;margin:0}
-.d1{font-size:clamp(2.5rem,6.1vw,5.1rem);letter-spacing:-.045em;text-transform:uppercase}
-.d2{font-size:clamp(2.3rem,6vw,4.5rem)}
-h2{font-size:clamp(1.9rem,4.2vw,3.1rem)}
-h3{font-size:1.04rem;font-weight:700;letter-spacing:-.01em;line-height:1.3}
-p{margin:0}
-.lede{font-size:clamp(1.08rem,1rem + .6vw,1.32rem);line-height:1.5;font-weight:400;letter-spacing:-.012em;color:var(--fg)}
-.prose{max-width:62ch;display:flex;flex-direction:column;gap:1em;color:var(--fg-dim)}
-.prose strong{color:var(--fg);font-weight:600}
-.mono{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
-.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+/* ============================================================
+   Type roles
+   ============================================================ */
+.hero-display{font-size:var(--t-hero);font-weight:600;line-height:1.07;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.display-lg{font-size:var(--t-display-lg);font-weight:600;line-height:1.1;letter-spacing:-.012em;margin:0;text-wrap:balance}
+.display-md{font-size:var(--t-display-md);font-weight:600;line-height:1.2;letter-spacing:-.011em;margin:0;text-wrap:balance}
+.lead{font-size:var(--t-lead);font-weight:400;line-height:1.2;letter-spacing:.007em;margin:0}
+.lead-airy{font-size:var(--t-lead-airy);font-weight:300;line-height:1.5;margin:0}
+.tagline{font-size:var(--t-tagline);font-weight:600;line-height:1.19;letter-spacing:.011em;margin:0}
+.body{font-size:var(--t-body);font-weight:400;line-height:1.47;letter-spacing:-.022em;margin:0}
+.body strong{font-weight:600}
+.caption{font-size:var(--t-caption);font-weight:400;line-height:1.43;letter-spacing:-.016em;margin:0}
+.caption-strong{font-size:var(--t-caption);font-weight:600;line-height:1.29;letter-spacing:-.016em;margin:0}
+.fine{font-size:var(--t-fine);font-weight:400;line-height:1.35;letter-spacing:-.01em;margin:0}
+.overline{font-size:var(--t-caption);font-weight:600;letter-spacing:-.016em;color:var(--primary);margin:0}
+.muted{color:var(--ink-48)}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.measure{max-width:44ch}
 
-/* ============ shell ============ */
-.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gut)}
-section{padding-block:clamp(64px,9vw,132px)}
-.band{background:var(--band-bg);color:var(--band-fg)}
-.band .prose{color:var(--band-dim)}
-.rule{height:1px;background:var(--rule);border:0;margin:0}
+/* ============================================================
+   Tiles — edge to edge, the colour change is the divider
+   ============================================================ */
+.tile{padding-block:var(--section);padding-inline:var(--gut)}
+.tile-light{background:var(--canvas);color:var(--ink)}
+.tile-parchment{background:var(--parchment);color:var(--ink)}
+.tile-dark{background:var(--tile-1);color:var(--on-dark)}
+.tile-dark-2{background:var(--tile-2);color:var(--on-dark)}
+.tile-dark-3{background:var(--tile-3);color:var(--on-dark)}
+.tile-dark .muted,.tile-dark-2 .muted,.tile-dark-3 .muted{color:var(--on-dark-muted)}
+.tile-dark a,.tile-dark-2 a,.tile-dark-3 a{color:var(--primary-on-dark)}
+.inner{max-width:var(--wide);margin-inline:auto}
+.inner-text{max-width:var(--text);margin-inline:auto}
+.center{text-align:center}
+.stack{display:flex;flex-direction:column;align-items:center;gap:var(--md)}
+.tile-head{display:flex;flex-direction:column;gap:var(--sm);margin-bottom:var(--xxl)}
+.tile-head.center{align-items:center}
+.tile-head .lead,.tile-head .lead-airy{max-width:46ch;margin-inline:auto}
+@media (max-width:640px){.tile{padding-block:var(--xxl)}}
 
-/* ============ nav ============ */
-.nav{position:fixed;inset:0 0 auto 0;z-index:60;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--rule-soft);
-  transform:translateY(0);transition:transform .45s var(--ease)}
-.nav.up{transform:translateY(-102%)}
-.nav-in{max-width:var(--maxw);margin-inline:auto;padding:14px var(--gut);display:flex;align-items:center;gap:20px}
-.brand{font-family:var(--f-display);font-weight:700;letter-spacing:-.022em;font-size:.98rem;text-decoration:none;white-space:nowrap}
-.brand span{color:var(--accent)}
-.nav-links{margin-left:auto;display:flex;gap:22px}
-.nav-links a{text-decoration:none;color:var(--fg-dim);font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding-block:4px;transition:color .25s}
-.nav-links a:hover,.nav-links a.on{color:var(--fg)}
-.nav-cta{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;
-  border:1px solid var(--fg);padding:8px 14px;transition:background .25s,color .25s}
-.nav-cta:hover{background:var(--fg);color:var(--bg)}
-.prog{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0;z-index:70;transition:width .12s linear}
-@media (max-width:820px){.nav-links{display:none}}
+/* ============================================================
+   Navigation — black global bar + frosted sub-nav
+   ============================================================ */
+.globalnav{background:var(--black);color:var(--on-dark);height:44px;display:flex;align-items:center}
+.globalnav .inner{width:100%;display:flex;align-items:center;gap:20px;padding-inline:var(--gut)}
+.globalnav a{color:var(--on-dark);font-size:var(--t-fine);font-weight:400;letter-spacing:-.01em;opacity:.88;text-decoration:none}
+.globalnav a:hover{opacity:1;text-decoration:none}
+.globalnav .wordmark{font-weight:600;opacity:1;margin-right:auto}
+.globalnav .links{display:flex;gap:20px}
+@media (max-width:833px){.globalnav .links{display:none}}
 
-/* ============ hero ============ */
-.hero{padding-top:clamp(96px,14vw,168px);padding-bottom:clamp(40px,6vw,72px)}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.85fr);gap:clamp(28px,5vw,64px);align-items:end}
-.eyebrow{display:flex;align-items:center;gap:12px;color:var(--fg-dim);margin-bottom:clamp(20px,3vw,34px)}
-.eyebrow i{display:block;width:clamp(28px,5vw,64px);height:1px;background:var(--accent);font-style:normal}
-.hero h1{margin-bottom:clamp(18px,2.4vw,28px)}
-.hero h1 .line{display:block;overflow:hidden;padding-bottom:.09em;margin-bottom:-.09em}
-.hero h1 .line > span{display:block}
-.hero h1 em{font-style:normal;color:var(--accent);font-weight:300;font-size:.66em;text-transform:none;letter-spacing:-.03em;line-height:1.08}
-.hero-sub{max-width:46ch;color:var(--fg-dim);font-size:clamp(1.02rem,.95rem + .4vw,1.22rem);line-height:1.55}
-.portrait{position:relative;overflow:hidden;background:var(--paper-2)}
-.portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(1) contrast(1.04)}
-.portrait.tint img{filter:none}
-.pcap{display:flex;justify-content:space-between;gap:12px;color:var(--fg-dim);margin-top:10px}
-.signals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule);margin-top:clamp(40px,6vw,72px)}
-.signals div{padding:18px 18px 18px 0;border-right:1px solid var(--rule-soft)}
-.signals div:last-child{border-right:0}
-.signals b{display:block;font-family:var(--f-display);font-weight:800;font-size:clamp(1.5rem,3.2vw,2.3rem);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
-.signals span{display:block;color:var(--fg-dim);margin-top:8px}
-@media (max-width:860px){
-  .hero-grid{grid-template-columns:1fr}
-  .hero .portrait{order:-1;max-width:340px;margin-inline:auto}
-  .two .portrait{max-width:420px}
-  .signals{grid-template-columns:repeat(2,1fr)}
-  .signals div:nth-child(2n){border-right:0}
-  .signals div{padding-right:12px}
-}
+.subnav{position:sticky;top:0;z-index:50;height:52px;display:flex;align-items:center;
+  background:rgba(245,245,247,.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.08)}
+.subnav .inner{width:100%;display:flex;align-items:center;gap:var(--lg);padding-inline:var(--gut)}
+.subnav .cat{font-size:var(--t-tagline);font-weight:600;letter-spacing:.011em;color:var(--ink);white-space:nowrap;text-decoration:none}
+.subnav .cat:hover{text-decoration:none}
+.subnav .links{margin-left:auto;display:flex;gap:var(--lg)}
+.subnav .links a{font-size:var(--t-caption);color:var(--ink);letter-spacing:-.016em;text-decoration:none;opacity:.86}
+.subnav .links a:hover,.subnav .links a[aria-current="true"]{opacity:1;color:var(--primary);text-decoration:none}
+@media (max-width:833px){.subnav .links{display:none}.subnav .inner{justify-content:space-between}.subnav .btn{margin-left:auto}}
 
-/* ============ profile ============ */
-.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(28px,5vw,72px);align-items:start}
-.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:clamp(28px,4vw,48px)}
-.sec-head .mono{color:var(--accent);white-space:nowrap}
-.spec{list-style:none;padding:0;margin:0;border-top:1px solid var(--rule)}
-.spec li{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule-soft);align-items:baseline}
-.spec li .mono{color:var(--fg-dim);flex:none;width:2.2em}
-@media (max-width:860px){.two{grid-template-columns:1fr}}
+/* ============================================================
+   Buttons — pill CTAs and compact utility rects
+   ============================================================ */
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;cursor:pointer;
+  font-family:inherit;font-size:var(--t-body);font-weight:400;letter-spacing:-.022em;line-height:1;
+  padding:11px 22px;border-radius:9999px;background:var(--primary);color:#fff;text-decoration:none;
+  transition:transform .18s var(--ease),background-color .18s var(--ease)}
+.btn:hover{text-decoration:none;background:var(--primary-focus)}
+.btn:active{transform:scale(.95)}
+.btn-ghost{background:transparent;color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.btn-ghost:hover{background:rgba(0,102,204,.06)}
+.btn-ghost-dark{background:transparent;color:var(--primary-on-dark);box-shadow:inset 0 0 0 1px var(--primary-on-dark)}
+.btn-ghost-dark:hover{background:rgba(41,151,255,.1)}
+.btn-lg{font-size:18px;font-weight:300;padding:14px 28px}
+.btn-sm{font-size:var(--t-caption);padding:8px 16px}
+.ctas{display:flex;flex-wrap:wrap;gap:var(--sm);justify-content:center}
+.linkrow{display:flex;flex-wrap:wrap;gap:var(--lg);justify-content:center}
+.arrowlink{font-size:var(--t-body);letter-spacing:-.022em;color:var(--primary);text-decoration:none;white-space:nowrap}
+.arrowlink:hover{text-decoration:underline}
+.arrowlink::after{content:" \203A";font-weight:400}
 
-/* ============ quote ============ */
-.quote{padding-block:clamp(56px,8vw,110px)}
-.quote blockquote{margin:0}
-.quote q{quotes:none;font-family:var(--f-display);font-weight:700;
-  font-size:clamp(1.65rem,4vw,2.95rem);line-height:1.08;letter-spacing:-.042em;display:block;max-width:14em}
-.quote q i{font-style:normal;color:var(--accent)}
-.quote figcaption{margin-top:24px;color:var(--band-dim)}
+/* ============================================================
+   Product imagery — the only shadow in the system
+   ============================================================ */
+.render{box-shadow:var(--shadow-product)}
+.hero-portrait{width:min(340px,72vw);margin-top:var(--xl)}
+.hero-portrait img{aspect-ratio:4/5;object-fit:cover;width:100%}
 
-/* ============ figures ============ */
-.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--rule)}
-.figs .fig{padding:clamp(20px,3vw,32px) 24px clamp(20px,3vw,32px) 0;border-bottom:1px solid var(--rule);border-right:1px solid var(--rule-soft)}
-.figs .fig:nth-child(3n){border-right:0}
-.fig b{display:block;font-family:var(--f-display);font-weight:800;
-  font-size:clamp(2.1rem,5vw,3.5rem);line-height:.95;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
-.fig b small{font-size:.44em;font-weight:700;letter-spacing:0;color:var(--accent);margin-left:.12em}
-.fig .k{display:block;margin-top:12px;color:var(--fg-dim)}
-.fig .s{display:block;margin-top:4px;color:var(--fg-dim);font-size:.9rem;line-height:1.5}
-@media (max-width:760px){.figs{grid-template-columns:repeat(2,1fr)}.figs .fig:nth-child(3n){border-right:1px solid var(--rule-soft)}.figs .fig:nth-child(2n){border-right:0}}
-@media (max-width:420px){.figs{grid-template-columns:1fr}.figs .fig{border-right:0!important}}
+/* ============================================================
+   Figure rows
+   ============================================================ */
+.figs{display:grid;gap:var(--xl) var(--lg);grid-template-columns:repeat(4,minmax(0,1fr));max-width:1100px;margin-inline:auto}
+.figs-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.fig b{display:block;font-size:var(--t-display-lg);font-weight:600;line-height:1.1;letter-spacing:-.012em;
+  font-variant-numeric:tabular-nums}
+.fig .k{display:block;margin-top:var(--xs);font-size:var(--t-caption);line-height:1.43;letter-spacing:-.016em;color:var(--ink-48)}
+.tile-dark .fig .k,.tile-dark-2 .fig .k,.tile-dark-3 .fig .k{color:var(--on-dark-muted)}
+.fig .s{display:block;margin-top:var(--xxs);font-size:var(--t-caption);line-height:1.43;color:var(--ink-48)}
+@media (max-width:833px){.figs,.figs-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.figs,.figs-3{grid-template-columns:1fr;gap:var(--lg)}}
 
-/* ============ practice ============ */
-.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3.4vw,48px)}
-.col > .mono{color:var(--accent);display:block;padding-bottom:14px;border-bottom:1px solid var(--rule)}
-.col h3{margin:18px 0 20px;font-size:clamp(1.15rem,1.6vw,1.4rem)}
-.col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
-.col li strong{display:block;font-weight:600;font-size:.94rem;letter-spacing:-.012em;margin-bottom:4px}
-.col li span{color:var(--fg-dim);font-size:.94rem;line-height:1.55;display:block}
-@media (max-width:860px){.cols{grid-template-columns:1fr;gap:40px}}
+/* ============================================================
+   Two-up section
+   ============================================================ */
+.twoup{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(32px,5vw,72px);align-items:center}
+.twoup .copy{display:flex;flex-direction:column;gap:var(--lg);max-width:640px}
+@media (max-width:833px){.twoup{grid-template-columns:1fr;gap:var(--xl)}.twoup .shotcol{max-width:420px;margin-inline:auto;width:100%}}
 
-/* ============ clients ============ */
-.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
-.track{display:flex;gap:clamp(40px,6vw,86px);width:max-content;align-items:center;padding-block:22px;animation:slide 52s linear infinite}
-.track.rev{animation-direction:reverse;animation-duration:64s}
+.speclist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--sm)}
+.speclist li{display:flex;gap:var(--sm);align-items:baseline;font-size:var(--t-body);line-height:1.47;letter-spacing:-.022em}
+.speclist li::before{content:"";flex:none;width:6px;height:6px;border-radius:9999px;background:var(--primary);transform:translateY(-2px)}
+
+/* ============================================================
+   Practice columns
+   ============================================================ */
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,56px)}
+.col h3{margin:0 0 var(--lg)}
+.col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--lg)}
+.col li strong{display:block;font-size:var(--t-body);font-weight:600;letter-spacing:-.022em;line-height:1.24;margin-bottom:var(--xxs)}
+.col li span{display:block;font-size:var(--t-body);line-height:1.47;letter-spacing:-.022em;color:var(--ink-48)}
+@media (max-width:833px){.cols{grid-template-columns:1fr;gap:var(--xl)}}
+
+/* ============================================================
+   Client logo marquee
+   ============================================================ */
+.marquee{overflow:hidden;margin-inline:calc(var(--gut)*-1);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;align-items:center;gap:clamp(40px,6vw,84px);width:max-content;padding-block:var(--lg);animation:slide 54s linear infinite}
+.track.rev{animation-direction:reverse;animation-duration:66s}
 .marquee:hover .track{animation-play-state:paused}
-.track img{height:clamp(26px,3.4vw,40px);width:auto;object-fit:contain;opacity:.72;
-  filter:brightness(0) invert(1);transition:opacity .3s}
+.track img{height:clamp(24px,3vw,36px);width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.75;transition:opacity .3s var(--ease)}
 .track img:hover{opacity:1}
 @keyframes slide{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
-.sectors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--band-rule);margin-top:clamp(36px,5vw,60px);border-block:1px solid var(--band-rule)}
-.sectors div{background:var(--band-bg);padding:16px 14px 16px 0}
-.sectors .mono{color:var(--band-dim);display:block}
-.sectors b{font-family:var(--f-display);font-weight:700;font-size:1.5rem;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-@media (max-width:720px){.sectors{grid-template-columns:repeat(2,1fr)}}
+.sectors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--lg);margin-top:var(--xxl)}
+.sectors b{display:block;font-size:var(--t-display-md);font-weight:600;letter-spacing:-.011em;font-variant-numeric:tabular-nums}
+.sectors span{display:block;margin-top:var(--xs);font-size:var(--t-caption);line-height:1.43;color:var(--on-dark-muted)}
+@media (max-width:640px){.sectors{grid-template-columns:repeat(2,1fr)}}
 
-/* ============ results ============ */
-.case{border-top:1px solid var(--rule);padding-top:clamp(28px,4vw,44px);margin-top:clamp(48px,7vw,84px)}
-.case:first-of-type{margin-top:clamp(28px,4vw,48px)}
-.case-head{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:baseline;margin-bottom:26px}
-.case-head h3{font-size:clamp(1.3rem,2.4vw,1.85rem);letter-spacing:-.025em}
-.case-head .mono{color:var(--accent)}
-.case-head .src{margin-left:auto;color:var(--fg-dim);font-family:var(--f-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase}
-.kpis{display:flex;flex-wrap:wrap;gap:clamp(24px,4vw,56px);margin-bottom:32px}
-.kpi b{display:block;font-family:var(--f-display);font-weight:800;
-  font-size:clamp(1.7rem,3.4vw,2.5rem);letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
-.kpi .mono{color:var(--fg-dim);display:block;margin-top:9px}
-.kpi.up b{color:var(--accent)}
+/* ============================================================
+   Utility cards
+   ============================================================ */
+.card{background:var(--canvas);border:1px solid var(--hairline);border-radius:18px;padding:var(--lg)}
+.cardgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--lg)}
+.cardgrid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:1068px){.cardgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.cardgrid,.cardgrid-2{grid-template-columns:1fr}}
+.card .roas{display:flex;align-items:baseline;gap:var(--xs);margin:var(--sm) 0 var(--md)}
+.card .roas b{font-size:var(--t-display-md);font-weight:600;letter-spacing:-.011em;font-variant-numeric:tabular-nums}
+.card .roas span{font-size:var(--t-caption);color:var(--primary);font-weight:600;letter-spacing:-.016em}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:var(--xs) var(--sm);margin:0;font-size:var(--t-caption);
+  font-variant-numeric:tabular-nums;letter-spacing:-.016em}
+.card dt{color:var(--ink-48)}
+.card dd{margin:0;text-align:right;font-weight:600}
 
-.tblwrap{overflow-x:auto;margin-inline:calc(var(--gut)*-1);padding-inline:var(--gut)}
-table{border-collapse:collapse;width:100%;min-width:720px;font-family:var(--f-mono);font-size:.82rem;font-variant-numeric:tabular-nums}
-th{text-align:right;font-weight:500;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-dim);
-  padding:0 0 10px 18px;border-bottom:1px solid var(--rule);white-space:nowrap}
-th:first-child,td:first-child{text-align:left;padding-left:0}
-td{text-align:right;padding:11px 0 11px 18px;border-bottom:1px solid var(--rule-soft);white-space:nowrap}
-tbody tr:hover td{background:color-mix(in srgb,var(--accent) 8%,transparent)}
-td.idx{color:var(--fg-dim)}
-td .tag{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-dim)}
-tfoot td{border-bottom:0;border-top:1px solid var(--rule);font-weight:500;padding-top:14px}
-tfoot .lbl{color:var(--accent);letter-spacing:.12em;font-size:.64rem;text-transform:uppercase}
+/* KPI row */
+.kpis{display:flex;flex-wrap:wrap;gap:var(--xl) clamp(32px,5vw,64px);margin-bottom:var(--xl)}
+.kpi b{display:block;font-size:var(--t-display-md);font-weight:600;line-height:1.1;letter-spacing:-.011em;font-variant-numeric:tabular-nums}
+.kpi span{display:block;margin-top:var(--xxs);font-size:var(--t-caption);color:var(--ink-48);letter-spacing:-.016em}
+.kpi.accent b{color:var(--primary)}
 
-.bars{position:relative;display:flex;flex-direction:column;gap:10px;margin-top:6px;padding-bottom:24px}
-.bar{display:grid;grid-template-columns:2.4em minmax(0,1fr) 4.6em;gap:14px;align-items:center;font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums}
-.bar .i{color:var(--fg-dim)}
-.bar .t{position:relative;height:20px;background:var(--rule-soft)}
-.bar .t i{position:absolute;inset:0;display:block;width:100%;background:var(--fg);transform-origin:left center;transform:scaleX(var(--w));transition:transform 1.1s var(--ease)}
-.bar.hi .t i{background:var(--accent)}
-.bar .v{text-align:right;font-weight:500}
-.beq{position:absolute;top:0;bottom:24px;left:calc(2.4em + 14px);right:calc(4.6em + 14px);pointer-events:none}
-.beq u{position:absolute;left:25%;top:0;bottom:0;width:1px;background:var(--rule);text-decoration:none}
-.beq b{position:absolute;left:calc(25% + 8px);bottom:-20px;font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-dim);font-weight:400;white-space:nowrap}
+/* ============================================================
+   Table
+   ============================================================ */
+.tablecard{padding:0;overflow:hidden}
+.tablescroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:var(--t-caption);font-variant-numeric:tabular-nums;letter-spacing:-.016em}
+caption{text-align:left;padding:var(--lg) var(--lg) var(--sm);font-size:var(--t-caption);font-weight:600;color:var(--ink)}
+th{text-align:right;font-weight:400;color:var(--ink-48);padding:var(--xs) var(--sm) var(--sm);white-space:nowrap;border-bottom:1px solid var(--hairline)}
+th:first-child,td:first-child{text-align:left;padding-left:var(--lg)}
+th:last-child,td:last-child{padding-right:var(--lg)}
+td{text-align:right;padding:13px var(--sm);border-bottom:1px solid var(--divider-soft);white-space:nowrap}
+td:first-child{color:var(--ink-48)}
+tbody tr:hover td{background:var(--parchment)}
+tfoot td{border-bottom:0;border-top:1px solid var(--hairline);font-weight:600;padding-block:var(--md)}
+tfoot td:first-child{color:var(--primary)}
 
-.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,4vw,56px)}
-@media (max-width:760px){.split{grid-template-columns:1fr}}
-.acct{border-top:1px solid var(--rule);padding-top:16px}
-.acct .mono{color:var(--fg-dim)}
-.acct .r{display:flex;align-items:baseline;gap:10px;margin-top:12px}
-.acct .r b{font-family:var(--f-display);font-weight:800;font-size:clamp(1.8rem,3.2vw,2.4rem);letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
-.acct .r span{color:var(--accent);font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
-.acct dl{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin:16px 0 0;font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums}
-.acct dt{color:var(--fg-dim);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase}
-.acct dd{margin:2px 0 0;text-align:right}
+/* ============================================================
+   ROAS bars
+   ============================================================ */
+.bars{position:relative;display:flex;flex-direction:column;gap:var(--xs);padding-bottom:28px}
+.bar{display:grid;grid-template-columns:2.2em minmax(0,1fr) 4.2em;gap:var(--sm);align-items:center;
+  font-size:var(--t-caption);font-variant-numeric:tabular-nums;letter-spacing:-.016em}
+.bar .i{color:var(--ink-48)}
+.bar .t{position:relative;height:18px;border-radius:9999px;background:var(--parchment);overflow:hidden}
+.bar .t i{position:absolute;inset:0;width:100%;border-radius:9999px;background:var(--primary);opacity:.5;
+  transform-origin:left center;transform:scaleX(var(--w));transition:transform 1.1s var(--ease)}
+.bar.hi .t i{opacity:1}
+.bar .v{text-align:right;font-weight:600}
+.beq{position:absolute;top:0;bottom:28px;left:calc(2.2em + var(--sm));right:calc(4.2em + var(--sm));pointer-events:none}
+.beq u{position:absolute;left:25%;top:0;bottom:0;width:1px;background:var(--hairline);text-decoration:none}
+.beq b{position:absolute;left:calc(25% + 8px);bottom:-22px;font-size:var(--t-fine);font-weight:400;color:var(--ink-48);white-space:nowrap}
 
-.stack{display:flex;flex-direction:column;gap:8px;margin-top:18px}
-.sbar{display:flex;height:34px;width:100%;overflow:hidden;transform-origin:left center;transition:transform 1s var(--ease)}
+/* ============================================================
+   Split bars + donut
+   ============================================================ */
+.sbar{display:flex;height:32px;border-radius:8px;overflow:hidden;margin-top:var(--md);
+  transform-origin:left center;transition:transform 1s var(--ease)}
 .sbar i{display:block;height:100%}
-.sbar .a{background:var(--fg)}
-.sbar .b{background:var(--accent)}
-.skey{display:flex;gap:22px;flex-wrap:wrap;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;color:var(--fg-dim)}
-.skey s{text-decoration:none;display:inline-block;width:9px;height:9px;margin-right:7px}
+.sbar .a{background:var(--primary)}
+.sbar .b{background:var(--ink);opacity:.22}
+.skey{display:flex;flex-wrap:wrap;gap:var(--md);margin-top:var(--sm);font-size:var(--t-caption);color:var(--ink-48);letter-spacing:-.016em}
+.skey i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:7px}
 
-.donut{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:clamp(24px,4vw,48px);align-items:center}
-.donut svg{width:100%;height:auto;overflow:visible}
-.donut .rings{transform:rotate(-90deg);transform-origin:100px 100px;transition:opacity .9s var(--ease),transform 1.2s var(--ease)}
-.ring{transition:stroke-dashoffset 1.2s var(--ease),opacity .3s}
-.dcenter{font-family:var(--f-display);font-weight:800;letter-spacing:-.03em}
-.legend{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 26px;
-  font-family:var(--f-mono);font-size:.74rem;font-variant-numeric:tabular-nums}
-.legend li{display:flex;align-items:baseline;gap:9px;padding-bottom:9px;border-bottom:1px solid var(--rule-soft)}
-.legend s{text-decoration:none;width:9px;height:9px;flex:none;transform:translateY(1px)}
-.legend em{font-style:normal;margin-left:auto;color:var(--fg-dim)}
-@media (max-width:640px){.donut{grid-template-columns:1fr}.legend{grid-template-columns:1fr}}
+.donutwrap{display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.donutwrap svg{width:100%;height:auto}
+.rings{transform:rotate(-90deg);transform-origin:100px 100px;transition:opacity .9s var(--ease),transform 1.2s var(--ease)}
+.legend{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sm) var(--xl);
+  font-size:var(--t-caption);font-variant-numeric:tabular-nums;letter-spacing:-.016em}
+.legend li{display:flex;align-items:baseline;gap:var(--xs);padding-bottom:var(--xs);border-bottom:1px solid var(--divider-soft)}
+.legend i{width:8px;height:8px;border-radius:2px;flex:none;transform:translateY(1px)}
+.legend em{font-style:normal;margin-left:auto;color:var(--ink-48)}
+@media (max-width:640px){.donutwrap{grid-template-columns:1fr}.legend{grid-template-columns:1fr}}
 
-/* ============ production ============ */
-.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.6vw,30px)}
-.shot{overflow:hidden;background:var(--paper-2)}
-.shot img{aspect-ratio:3/2;object-fit:cover;width:100%;transition:transform 1.2s var(--ease)}
-.shot:hover img{transform:scale(1.035)}
-.shot figcaption{margin-top:12px;color:var(--fg-dim);display:flex;gap:10px;align-items:baseline}
-.shot figcaption b{color:var(--fg);font-family:var(--f-display);font-weight:600;font-size:.9rem}
-@media (max-width:700px){.shots{grid-template-columns:1fr}}
+/* ============================================================
+   Production stills
+   ============================================================ */
+.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,3vw,32px)}
+.shot img{aspect-ratio:3/2;object-fit:cover;width:100%}
+.shot figcaption{margin-top:var(--md);display:flex;flex-direction:column;gap:2px}
+.shot figcaption b{font-size:var(--t-body);font-weight:600;letter-spacing:-.022em}
+.shot figcaption span{font-size:var(--t-caption);color:var(--on-dark-muted);letter-spacing:-.016em}
+@media (max-width:640px){.shots{grid-template-columns:1fr}}
 
-/* ============ credentials ============ */
-.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(166px,1fr));gap:clamp(22px,3vw,40px);align-items:start}
-.badge{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
-.badge img{height:clamp(76px,9vw,104px);width:auto;object-fit:contain;transition:transform .5s var(--ease)}
-.badge:hover img{transform:translateY(-5px)}
-.badge span{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-dim);line-height:1.55;max-width:21ch}
-.cred-sub{margin-top:clamp(44px,6vw,72px)}
+/* ============================================================
+   Credentials
+   ============================================================ */
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(166px,1fr));gap:var(--xl) var(--lg)}
+.badge{display:flex;flex-direction:column;align-items:center;gap:var(--sm);text-align:center;margin:0}
+.badge img{height:clamp(78px,8vw,100px);width:auto;object-fit:contain;transition:transform .5s var(--ease)}
+.badge:hover img{transform:translateY(-4px)}
+.badge figcaption{font-size:var(--t-caption);line-height:1.43;letter-spacing:-.016em;color:var(--ink-48);max-width:22ch}
 
-/* ============ contact ============ */
-.contact{background:var(--band-bg);color:var(--band-fg)}
-.contact .rule{background:var(--band-rule)}
-.clist{list-style:none;margin:clamp(28px,4vw,44px) 0 0;padding:0;border-top:1px solid var(--band-rule)}
-.clist li{border-bottom:1px solid var(--band-rule)}
-.clist a{display:flex;align-items:baseline;gap:16px;padding:18px 0;text-decoration:none;transition:padding-left .4s var(--ease),color .3s}
-.clist a:hover{padding-left:14px;color:var(--accent-2)}
-.clist .mono{color:var(--band-dim);width:6.5em;flex:none}
-.clist .val{font-family:var(--f-display);font-weight:600;font-size:clamp(1rem,2vw,1.3rem);letter-spacing:-.02em;word-break:break-word}
-.clist .arw{margin-left:auto;color:var(--band-dim);font-family:var(--f-mono);font-size:.8rem}
-footer{padding-block:34px;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;color:var(--band-dim)}
-footer .mono{color:var(--band-dim)}
-footer .dot{margin-left:auto}
+/* ============================================================
+   Contact + footer
+   ============================================================ */
+.contactgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,5vw,72px);align-items:center}
+.contactgrid .shotcol figure{max-width:440px;margin-left:auto}
+@media (max-width:833px){.contactgrid{grid-template-columns:1fr}.contactgrid .shotcol figure{margin-inline:auto}.contactgrid .shotcol{max-width:380px;margin-inline:auto;width:100%}}
+.clist{list-style:none;margin:var(--xl) 0 0;padding:0;display:flex;flex-direction:column}
+.clist li{border-top:1px solid var(--hairline-dark)}
+.clist li:last-child{border-bottom:1px solid var(--hairline-dark)}
+.clist a{display:flex;align-items:baseline;gap:var(--md);padding:var(--md) 0;color:var(--on-dark);text-decoration:none;
+  transition:padding-left .35s var(--ease)}
+.clist a:hover{text-decoration:none;padding-left:var(--xs);color:var(--primary-on-dark)}
+.clist .k{flex:none;width:7.5em;font-size:var(--t-caption);color:var(--on-dark-muted);letter-spacing:-.016em}
+.clist .v{font-size:var(--t-body);font-weight:600;letter-spacing:-.022em;word-break:break-word}
+.clist .go{margin-left:auto;color:var(--primary-on-dark)}
 
-/* ============ motion ============ */
-[data-anim]{will-change:transform,opacity}
-.pending{opacity:0;transform:translateY(22px)}
-.pending.in{opacity:1;transform:none;transition:opacity .85s var(--ease),transform .85s var(--ease)}
+footer{background:var(--parchment);color:var(--ink-80);padding:64px var(--gut)}
+.footcols{max-width:var(--wide);margin-inline:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--xl)}
+.footcols h4{margin:0 0 var(--xs);font-size:var(--t-caption);font-weight:600;letter-spacing:-.016em;color:var(--ink)}
+.footcols ul{list-style:none;margin:0;padding:0}
+.footcols li{line-height:2.2;font-size:var(--t-caption);letter-spacing:-.016em}
+.footcols a{color:var(--ink-80);text-decoration:none}
+.footcols a:hover{color:var(--primary);text-decoration:underline}
+.footlegal{max-width:var(--wide);margin:var(--xl) auto 0;padding-top:var(--md);border-top:1px solid var(--hairline);
+  display:flex;flex-wrap:wrap;gap:var(--xs) var(--lg);color:var(--ink-48)}
+.footlegal .end{margin-left:auto}
+@media (max-width:833px){.footcols{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.footcols{grid-template-columns:1fr}}
+
+/* ============================================================
+   Motion
+   ============================================================ */
+.pending{opacity:0;transform:translateY(20px)}
+.pending.in{opacity:1;transform:none;transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .pending .bar .t i{transform:scaleX(0)}
 .pending.in .bar .t i{transform:scaleX(var(--w))}
 .pending .sbar{transform:scaleX(0)}
 .pending.in .sbar{transform:scaleX(1)}
-.pending .donut .rings{opacity:0;transform:rotate(-150deg) scale(.93)}
-.pending.in .donut .rings{opacity:1;transform:rotate(-90deg) scale(1)}
-.pending.in .stag{transition-delay:calc(var(--i,0)*70ms)}
-.hero h1 .line > span{transform:translateY(102%);animation:rise .95s var(--ease) forwards}
-.hero h1 .line:nth-child(1) > span{animation-delay:.06s}
-.hero h1 .line:nth-child(2) > span{animation-delay:.16s}
-.hero h1 .line:nth-child(3) > span{animation-delay:.26s}
-@keyframes rise{to{transform:translateY(0)}}
-.fade-up{opacity:0;animation:fadeup .9s var(--ease) .42s forwards}
-@keyframes fadeup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.hero .portrait img{animation:zoomout 1.6s var(--ease) both}
-@keyframes zoomout{from{transform:scale(1.07)}to{transform:scale(1)}}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.pending .rings{opacity:0;transform:rotate(-150deg) scale(.94)}
+.pending.in .rings{opacity:1;transform:rotate(-90deg) scale(1)}
+.rise{animation:rise .9s var(--ease) both}
+.rise-2{animation-delay:.1s}
+.rise-3{animation-delay:.2s}
+.rise-4{animation-delay:.3s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .pending{opacity:1!important;transform:none!important}
-  .hero h1 .line > span{transform:none}
-  .fade-up{opacity:1}
-  .marquee{-webkit-mask-image:none;mask-image:none;padding-inline:var(--gut)}
-  .track{animation:none;width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
-    gap:clamp(24px,3vw,44px);place-items:center;padding-block:14px}
+  .marquee{-webkit-mask-image:none;mask-image:none;margin-inline:0}
+  .track{width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:var(--xl);place-items:center}
   .track img[aria-hidden="true"]{display:none}
 }
 </style>
 
-<div class="prog" id="prog" aria-hidden="true"></div>
+<header class="globalnav">
+  <div class="inner">
+    <a class="wordmark" href="#top">Isuru Marasinghe</a>
+    <nav class="links" aria-label="Sections">
+      <a href="#profile">Profile</a>
+      <a href="#practice">Practice</a>
+      <a href="#clients">Clients</a>
+      <a href="#results">Results</a>
+      <a href="#production">Production</a>
+      <a href="#credentials">Credentials</a>
+    </nav>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
 
-<header class="nav" id="nav">
-  <div class="nav-in">
-    <a class="brand" href="#top">Isuru Marasinghe<span>.</span></a>
-    <nav class="nav-links" id="navlinks" aria-label="Sections">
+<div class="subnav">
+  <div class="inner">
+    <a class="cat" href="#top">Portfolio</a>
+    <nav class="links" id="subnavlinks" aria-label="Page sections">
       <a href="#profile">Profile</a>
       <a href="#practice">Practice</a>
       <a href="#clients">Clients</a>
       <a href="#results">Results</a>
       <a href="#credentials">Credentials</a>
     </nav>
-    <a class="nav-cta" href="#contact">Let's talk</a>
+    <a class="btn btn-sm" href="#contact">Get in touch</a>
   </div>
-</header>
+</div>
 
 <main id="top">
 
-<!-- ==================== HERO ==================== -->
-<section class="hero wrap">
-  <div class="eyebrow mono"><i></i>Performance marketing &amp; creative strategy &nbsp;·&nbsp; UAE / Sri Lanka</div>
-  <div class="hero-grid">
-    <div>
-      <h1 class="d1">
-        <span class="line"><span>Media buying</span></span>
-        <span class="line"><span>is a commodity.</span></span>
-        <span class="line"><span><em>Creative is the variable.</em></span></span>
-      </h1>
-      <p class="hero-sub fade-up">I build full-stack ad engines — creative direction, paid media and measurement — for e-commerce, real estate, education and SaaS brands across the Gulf and South Asia.</p>
+<!-- ===================== HERO ===================== -->
+<section class="tile tile-light">
+  <div class="inner-text stack center">
+    <p class="overline rise">Performance marketing &amp; creative strategy</p>
+    <h1 class="hero-display rise rise-2">Media buying is a commodity.</h1>
+    <p class="lead rise rise-3" style="max-width:34ch">Creative is the variable of success.</p>
+    <div class="ctas rise rise-4" style="margin-top:var(--xs)">
+      <a class="btn" href="#results">See the numbers</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
     </div>
-    <figure class="portrait" style="margin:0">
+    <figure class="hero-portrait render rise rise-4" style="margin:var(--xl) 0 0" data-par="0.045">
       <img src="me-hero.jpg" alt="Isuru Marasinghe" width="537" height="672">
     </figure>
   </div>
+</section>
 
-  <div class="signals fade-up">
-    <div><b class="num" data-count="289169" data-prefix="AED ">AED 289,169</b><span class="mono">Meta ad spend managed</span></div>
-    <div><b class="num" data-count="5364">5,364</b><span class="mono">Leads generated</span></div>
-    <div><b class="num" data-count="2.24" data-dec="2" data-suffix="×">2.24×</b><span class="mono">Blended purchase ROAS</span></div>
-    <div><b class="num" data-count="81.3" data-dec="1" data-prefix="AED " data-suffix="M">AED 81.3M</b><span class="mono">Closed deal value</span></div>
+<!-- ===================== SIGNALS ===================== -->
+<section class="tile tile-parchment" style="padding-block:var(--xxl)">
+  <div class="inner figs" data-anim>
+    <div class="fig"><b class="num" data-count="289169" data-prefix="AED ">AED 289,169</b><span class="k">Meta ad spend managed</span></div>
+    <div class="fig"><b class="num" data-count="5364">5,364</b><span class="k">Leads generated</span></div>
+    <div class="fig"><b class="num" data-count="2.24" data-dec="2" data-suffix="×">2.24×</b><span class="k">Blended purchase ROAS</span></div>
+    <div class="fig"><b class="num" data-count="81.3" data-dec="1" data-prefix="AED " data-suffix="M">AED 81.3M</b><span class="k">Closed deal value</span></div>
   </div>
 </section>
 
-<!-- ==================== PROFILE ==================== -->
-<section id="profile" class="wrap">
-  <div class="sec-head" data-anim>
-    <span class="mono">01 — Profile</span>
-    <h2>Hello, I'm Isuru</h2>
+<!-- ===================== PROFILE ===================== -->
+<section id="profile" class="tile tile-light">
+  <div class="inner twoup">
+    <div class="shotcol" data-anim data-par="0.04">
+      <figure class="render" style="margin:0">
+        <img src="me-about.jpg" alt="Isuru Marasinghe" width="537" height="672">
+      </figure>
+    </div>
+    <div class="copy" data-anim>
+      <h2 class="display-lg">Hello, I'm Isuru.</h2>
+      <p class="lead-airy">A results-driven performance marketing specialist and creative strategist, managing and scaling paid campaigns across Meta, Google, TikTok and LinkedIn — with programmatic buying through Eskimi DSP and Oracle BlueKai.</p>
+      <p class="body muted">Over the years I've worked with brands across e-commerce, real estate, higher education, SaaS and service businesses — most of them in the UAE and Sri Lanka, several scaled from a cold start. I specialise in a <strong>full-stack performance approach</strong>: I don't just manage ad spend, I engineer the entire conversion journey — from the hook in the first three seconds to the attribution model that proves what the spend was worth.</p>
+      <ul class="speclist">
+        <li>Creative direction, photography and videography</li>
+        <li>Sales-qualified leads at a lower cost per lead</li>
+        <li>E-commerce revenue scaled profitably</li>
+        <li>Conversion rates improved with data-driven insight</li>
+        <li>High-performing marketing funnels, end to end</li>
+      </ul>
+      <p class="caption muted">MSc in AI (reading) · MBA (UK) · ACIM (UK) · PgDip.M (UK) · AMSLIM (SL) · CLSSWB · BM (Hons) Marketing, First Class</p>
+    </div>
   </div>
-  <div class="two">
-    <figure class="portrait" style="margin:0" data-anim data-par="0.05">
-      <img src="me-about.jpg" alt="Isuru Marasinghe, portrait" width="537" height="672">
-      <figcaption class="pcap mono"><span>Isuru M.</span><span>MSc AI · MBA · ACIM</span></figcaption>
-    </figure>
-    <div data-anim>
-      <div class="prose">
-        <p class="lede">I'm a results-driven performance marketing specialist and creative strategist. I manage and scale paid campaigns across <strong>Meta, Google, TikTok and LinkedIn</strong>, with programmatic buying through Eskimi DSP and Oracle BlueKai.</p>
-        <p>Over the years I've worked with brands across e-commerce, real estate, higher education, SaaS and service businesses — most of them in the UAE and Sri Lanka, several of them scaled from a cold start.</p>
-        <p>I specialise in a <strong>“full-stack” performance approach</strong>. I don't just manage ad spend; I engineer the entire conversion journey — from the hook in the first three seconds to the attribution model that proves what the spend was worth.</p>
+</section>
+
+<!-- ===================== PHILOSOPHY ===================== -->
+<section class="tile tile-dark">
+  <div class="inner-text center stack">
+    <h2 class="display-lg" data-anim style="max-width:20ch">I use data to inform creative, and <span style="color:var(--primary-on-dark)">creative to drive down acquisition cost.</span></h2>
+    <p class="caption muted" data-anim>The operating philosophy</p>
+  </div>
+</section>
+
+<!-- ===================== NUMBERS ===================== -->
+<section class="tile tile-light">
+  <div class="inner">
+    <div class="tile-head center" data-anim>
+      <h2 class="display-lg">Reported totals.</h2>
+      <p class="lead muted">Every figure read straight from the platform reporting.</p>
+    </div>
+    <div class="figs figs-3" data-anim>
+      <div class="fig"><b class="num" data-count="289169" data-prefix="AED ">AED 289,169</b><span class="k">Meta ad spend managed</span><span class="s">Lead generation and e-commerce accounts.</span></div>
+      <div class="fig"><b class="num" data-count="5364">5,364</b><span class="k">Leads delivered</span><span class="s">Form and conversion leads, 11 campaigns.</span></div>
+      <div class="fig"><b class="num" data-count="43.75" data-dec="2" data-prefix="AED ">AED 43.75</b><span class="k">Blended cost per lead</span><span class="s">Best campaign: AED 6.48 per lead.</span></div>
+      <div class="fig"><b class="num" data-count="13.1" data-dec="1" data-suffix="M">13.1M</b><span class="k">Impressions delivered</span><span class="s">5.6M accounts reached.</span></div>
+      <div class="fig"><b class="num" data-count="3.55" data-dec="2" data-suffix="×">3.55×</b><span class="k">Best ad-set ROAS</span><span class="s">2.24× blended across the account.</span></div>
+      <div class="fig"><b class="num" data-count="14743">14,743</b><span class="k">CRM leads contacted</span><span class="s">75 deals closed, AED 81.3M in value.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRACTICE ===================== -->
+<section id="practice" class="tile tile-parchment">
+  <div class="inner">
+    <div class="tile-head center" data-anim>
+      <h2 class="display-lg">Core expertise.</h2>
+      <p class="lead muted">Three disciplines, run as one engine.</p>
+    </div>
+    <div class="cols">
+      <div class="col" data-anim>
+        <h3 class="tagline">Creative direction &amp; strategy</h3>
+        <ul>
+          <li><strong>Creative strategy</strong><span>Ideas and hooks built from audience pain points and psychological triggers.</span></li>
+          <li><strong>Direct response design</strong><span>High-converting UGC scripts, static frameworks and motion that stops the scroll.</span></li>
+          <li><strong>Modular testing</strong><span>Hooks, bodies and CTAs tested separately to find winning combinations scientifically.</span></li>
+          <li><strong>Content briefing</strong><span>Creators and designers directed to produce social-first assets.</span></li>
+        </ul>
       </div>
-      <ul class="spec" style="margin-top:34px">
-        <li><span class="mono">01</span><span>Creative direction, photography and videography</span></li>
-        <li><span class="mono">02</span><span>Sales-qualified leads at a lower cost per lead</span></li>
-        <li><span class="mono">03</span><span>E-commerce revenue scaled profitably</span></li>
-        <li><span class="mono">04</span><span>Conversion rates improved with data-driven insight</span></li>
-        <li><span class="mono">05</span><span>High-performing marketing funnels, end to end</span></li>
-      </ul>
+      <div class="col" data-anim>
+        <h3 class="tagline">Paid media management</h3>
+        <ul>
+          <li><strong>Full-funnel Meta &amp; TikTok</strong><span>Advanced scaling structures using CBO, ABO, Advantage+ and broad targeting.</span></li>
+          <li><strong>High-intent Google Search</strong><span>Complex keyword architectures and Performance Max campaigns.</span></li>
+          <li><strong>LinkedIn ABM</strong><span>Precision account-based targeting for B2B lead generation.</span></li>
+          <li><strong>Retargeting architecture</strong><span>Multi-touchpoint sequences that reduce funnel drop-off.</span></li>
+        </ul>
+      </div>
+      <div class="col" data-anim>
+        <h3 class="tagline">Data, analytics &amp; tracking</h3>
+        <ul>
+          <li><strong>Measurement protocols</strong><span>Full setup of GA4, Google Tag Manager and the Meta Conversions API.</span></li>
+          <li><strong>Attribution modelling</strong><span>Moving beyond last-click to understand the true impact of top-of-funnel spend.</span></li>
+          <li><strong>Programmatic buying</strong><span>Audience activation through Eskimi DSP and Oracle BlueKai.</span></li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ==================== QUOTE ==================== -->
-<section class="band quote">
-  <div class="wrap">
-    <figure style="margin:0" data-anim>
-      <blockquote><q>I use data to inform creative, and <i>creative to drive down acquisition cost.</i></q></blockquote>
-      <figcaption class="mono">The operating philosophy</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ==================== NUMBERS ==================== -->
-<section class="wrap">
-  <div class="sec-head" data-anim>
-    <span class="mono">02 — By the numbers</span>
-    <h2>Reported totals</h2>
-  </div>
-  <div class="figs" data-anim>
-    <div class="fig stag" style="--i:0"><b class="num" data-count="289169" data-prefix="AED ">AED 289,169</b><span class="k mono">Meta ad spend managed</span><span class="s">Across lead-generation and e-commerce accounts.</span></div>
-    <div class="fig stag" style="--i:1"><b class="num" data-count="5364">5,364</b><span class="k mono">Leads delivered</span><span class="s">Form and conversion leads, 11 campaigns.</span></div>
-    <div class="fig stag" style="--i:2"><b class="num" data-count="43.75" data-dec="2" data-prefix="AED ">AED 43.75</b><span class="k mono">Blended cost per lead</span><span class="s">Best campaign: AED 6.48 per lead.</span></div>
-    <div class="fig stag" style="--i:3"><b class="num" data-count="13.1" data-dec="1" data-suffix="M">13.1M</b><span class="k mono">Impressions delivered</span><span class="s">5.6M accounts reached.</span></div>
-    <div class="fig stag" style="--i:4"><b class="num" data-count="3.55" data-dec="2" data-suffix="×">3.55×</b><span class="k mono">Best ad-set ROAS</span><span class="s">2.24× blended across the account.</span></div>
-    <div class="fig stag" style="--i:5"><b class="num" data-count="14743">14,743</b><span class="k mono">CRM leads contacted</span><span class="s">75 deals closed, AED 81.3M in value.</span></div>
-  </div>
-</section>
-
-<!-- ==================== PRACTICE ==================== -->
-<section id="practice" class="wrap">
-  <div class="sec-head" data-anim>
-    <span class="mono">03 — Practice</span>
-    <h2>Core expertise</h2>
-  </div>
-  <div class="cols">
-    <div class="col" data-anim>
-      <span class="mono">Creative</span>
-      <h3>Creative direction &amp; strategy</h3>
-      <ul>
-        <li><strong>Creative strategy</strong><span>Ideas and hooks built from audience pain points and psychological triggers.</span></li>
-        <li><strong>Direct response design</strong><span>High-converting UGC scripts, static frameworks and motion that stops the scroll.</span></li>
-        <li><strong>Modular testing</strong><span>Hooks, bodies and CTAs tested separately to find winning combinations scientifically.</span></li>
-        <li><strong>Content briefing</strong><span>Creators and designers directed to produce social-first assets.</span></li>
-      </ul>
+<!-- ===================== CLIENTS ===================== -->
+<section id="clients" class="tile tile-dark-3">
+  <div class="inner">
+    <div class="tile-head center" data-anim>
+      <h2 class="display-lg">Brands I've worked with.</h2>
+      <p class="lead muted">Twenty-four brands across eight sectors.</p>
     </div>
-    <div class="col" data-anim>
-      <span class="mono">Media</span>
-      <h3>Paid media management</h3>
-      <ul>
-        <li><strong>Full-funnel Meta &amp; TikTok</strong><span>Advanced scaling structures using CBO, ABO, Advantage+ and broad targeting.</span></li>
-        <li><strong>High-intent Google Search</strong><span>Complex keyword architectures and Performance Max campaigns.</span></li>
-        <li><strong>LinkedIn ABM</strong><span>Precision account-based targeting for B2B lead generation.</span></li>
-        <li><strong>Retargeting architecture</strong><span>Multi-touchpoint sequences that reduce funnel drop-off.</span></li>
-      </ul>
+    <div class="marquee" aria-label="Client logos">
+      <div class="track">
+        <img src="logo-123uni.webp" alt="123 UNI"><img src="logo-afg-aberdeen.webp" alt="AFG College with the University of Aberdeen"><img src="logo-esm.webp" alt="ESM Business School"><img src="logo-lsee.webp" alt="London School of Executive Education"><img src="logo-consider-consultancy.webp" alt="Consider Consultancy"><img src="logo-diploma-credits.webp" alt="Diploma Credits"><img src="logo-erah.webp" alt="ERAH"><img src="logo-paris-disney.webp" alt="Paris Disney Shuttle"><img src="logo-ceyleon.webp" alt="Ceyleon"><img src="logo-sparetime.webp" alt="SpareTime Global"><img src="logo-ethra.webp" alt="Ethra"><img src="logo-goorganic.webp" alt="go:organic">
+        <img src="logo-123uni.webp" alt="" aria-hidden="true"><img src="logo-afg-aberdeen.webp" alt="" aria-hidden="true"><img src="logo-esm.webp" alt="" aria-hidden="true"><img src="logo-lsee.webp" alt="" aria-hidden="true"><img src="logo-consider-consultancy.webp" alt="" aria-hidden="true"><img src="logo-diploma-credits.webp" alt="" aria-hidden="true"><img src="logo-erah.webp" alt="" aria-hidden="true"><img src="logo-paris-disney.webp" alt="" aria-hidden="true"><img src="logo-ceyleon.webp" alt="" aria-hidden="true"><img src="logo-sparetime.webp" alt="" aria-hidden="true"><img src="logo-ethra.webp" alt="" aria-hidden="true"><img src="logo-goorganic.webp" alt="" aria-hidden="true">
+      </div>
+      <div class="track rev">
+        <img src="logo-dsx.webp" alt="DSX Properties"><img src="logo-zee.webp" alt="Zee Real Estate"><img src="logo-vacay-luxury.webp" alt="Vacay Luxury Vacation Homes Rental"><img src="logo-master-fixer.webp" alt="Master Fixer"><img src="logo-a22.webp" alt="A22 Real Estate"><img src="logo-zentech.webp" alt="Zentech Technical Services"><img src="logo-superior-vertex.webp" alt="Superior Vertex Technical Services"><img src="logo-md3.webp" alt="Modus D3 Advertising Agency"><img src="logo-seventytwo.webp" alt="72"><img src="logo-nextpoint.webp" alt="Next Point Decoration Design and Fit-Out"><img src="logo-kelvin-haus.webp" alt="Kelvin Haus">
+        <img src="logo-dsx.webp" alt="" aria-hidden="true"><img src="logo-zee.webp" alt="" aria-hidden="true"><img src="logo-vacay-luxury.webp" alt="" aria-hidden="true"><img src="logo-master-fixer.webp" alt="" aria-hidden="true"><img src="logo-a22.webp" alt="" aria-hidden="true"><img src="logo-zentech.webp" alt="" aria-hidden="true"><img src="logo-superior-vertex.webp" alt="" aria-hidden="true"><img src="logo-md3.webp" alt="" aria-hidden="true"><img src="logo-seventytwo.webp" alt="" aria-hidden="true"><img src="logo-nextpoint.webp" alt="" aria-hidden="true"><img src="logo-kelvin-haus.webp" alt="" aria-hidden="true">
+      </div>
     </div>
-    <div class="col" data-anim>
-      <span class="mono">Data</span>
-      <h3>Data, analytics &amp; tracking</h3>
-      <ul>
-        <li><strong>Measurement protocols</strong><span>Full setup of GA4, Google Tag Manager and the Meta Conversions API.</span></li>
-        <li><strong>Attribution modelling</strong><span>Moving beyond last-click to understand the true impact of top-of-funnel spend.</span></li>
-        <li><strong>Programmatic buying</strong><span>Audience activation through Eskimi DSP and Oracle BlueKai.</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== CLIENTS ==================== -->
-<section id="clients" class="band">
-  <div class="wrap">
-    <div class="sec-head" data-anim>
-      <span class="mono" style="color:var(--accent-2)">04 — Clients</span>
-      <h2>Brands I've worked with</h2>
-    </div>
-  </div>
-  <div class="marquee" aria-label="Client logos">
-    <div class="track">
-      <img src="logo-123uni.webp" alt="123 UNI"><img src="logo-afg-aberdeen.webp" alt="AFG College with the University of Aberdeen"><img src="logo-esm.webp" alt="ESM Business School"><img src="logo-lsee.webp" alt="London School of Executive Education"><img src="logo-consider-consultancy.webp" alt="Consider Consultancy"><img src="logo-diploma-credits.webp" alt="Diploma Credits"><img src="logo-erah.webp" alt="ERAH"><img src="logo-paris-disney.webp" alt="Paris Disney Shuttle"><img src="logo-ceyleon.webp" alt="Ceyleon"><img src="logo-sparetime.webp" alt="SpareTime Global"><img src="logo-ethra.webp" alt="Ethra"><img src="logo-goorganic.webp" alt="go:organic">
-      <img src="logo-123uni.webp" alt="" aria-hidden="true"><img src="logo-afg-aberdeen.webp" alt="" aria-hidden="true"><img src="logo-esm.webp" alt="" aria-hidden="true"><img src="logo-lsee.webp" alt="" aria-hidden="true"><img src="logo-consider-consultancy.webp" alt="" aria-hidden="true"><img src="logo-diploma-credits.webp" alt="" aria-hidden="true"><img src="logo-erah.webp" alt="" aria-hidden="true"><img src="logo-paris-disney.webp" alt="" aria-hidden="true"><img src="logo-ceyleon.webp" alt="" aria-hidden="true"><img src="logo-sparetime.webp" alt="" aria-hidden="true"><img src="logo-ethra.webp" alt="" aria-hidden="true"><img src="logo-goorganic.webp" alt="" aria-hidden="true">
-    </div>
-    <div class="track rev">
-      <img src="logo-dsx.webp" alt="DSX Properties"><img src="logo-zee.webp" alt="Zee Real Estate"><img src="logo-vacay-luxury.webp" alt="Vacay Luxury Vacation Homes Rental"><img src="logo-master-fixer.webp" alt="Master Fixer"><img src="logo-a22.webp" alt="A22 Real Estate"><img src="logo-zentech.webp" alt="Zentech Technical Services"><img src="logo-superior-vertex.webp" alt="Superior Vertex Technical Services"><img src="logo-md3.webp" alt="Modus D3 Advertising Agency"><img src="logo-seventytwo.webp" alt="72"><img src="logo-nextpoint.webp" alt="Next Point Decoration Design and Fit-Out"><img src="logo-kelvin-haus.webp" alt="Kelvin Haus">
-      <img src="logo-dsx.webp" alt="" aria-hidden="true"><img src="logo-zee.webp" alt="" aria-hidden="true"><img src="logo-vacay-luxury.webp" alt="" aria-hidden="true"><img src="logo-master-fixer.webp" alt="" aria-hidden="true"><img src="logo-a22.webp" alt="" aria-hidden="true"><img src="logo-zentech.webp" alt="" aria-hidden="true"><img src="logo-superior-vertex.webp" alt="" aria-hidden="true"><img src="logo-md3.webp" alt="" aria-hidden="true"><img src="logo-seventytwo.webp" alt="" aria-hidden="true"><img src="logo-nextpoint.webp" alt="" aria-hidden="true"><img src="logo-kelvin-haus.webp" alt="" aria-hidden="true">
-    </div>
-  </div>
-  <div class="wrap">
     <div class="sectors" data-anim>
-      <div><b class="num">08</b><span class="mono">Higher education &amp; migration</span></div>
-      <div><b class="num">07</b><span class="mono">Real estate &amp; property care</span></div>
-      <div><b class="num">04</b><span class="mono">IT, SaaS &amp; e-commerce</span></div>
-      <div><b class="num">05</b><span class="mono">Agency, fit-out, travel &amp; apparel</span></div>
+      <div><b class="num">08</b><span>Higher education &amp; migration</span></div>
+      <div><b class="num">07</b><span>Real estate &amp; property care</span></div>
+      <div><b class="num">04</b><span>IT, SaaS &amp; e-commerce</span></div>
+      <div><b class="num">05</b><span>Agency, fit-out, travel &amp; apparel</span></div>
     </div>
   </div>
 </section>
 
-<!-- ==================== RESULTS ==================== -->
-<section id="results" class="wrap">
-  <div class="sec-head" data-anim>
-    <span class="mono">05 — Results</span>
-    <h2>Numbers from the accounts</h2>
+<!-- ===================== RESULTS: META LEAD GEN ===================== -->
+<section id="results" class="tile tile-parchment">
+  <div class="inner">
+    <div class="tile-head center" data-anim>
+      <p class="overline">Meta Ads</p>
+      <h2 class="display-lg">Lead generation at scale.</h2>
+      <p class="lead muted">5,364 leads at AED 43.75 blended. Campaign names withheld; every other column is as exported.</p>
+    </div>
+    <div data-anim>
+      <div class="kpis">
+        <div class="kpi"><b class="num" data-count="5364">5,364</b><span>Leads</span></div>
+        <div class="kpi"><b class="num" data-count="43.75" data-dec="2" data-prefix="AED ">AED 43.75</b><span>Cost per lead</span></div>
+        <div class="kpi"><b class="num" data-count="234689" data-prefix="AED ">AED 234,689</b><span>Spend</span></div>
+        <div class="kpi"><b class="num" data-count="10.2" data-dec="1" data-suffix="M">10.2M</b><span>Impressions</span></div>
+        <div class="kpi accent"><b class="num" data-count="6.48" data-dec="2" data-prefix="AED ">AED 6.48</b><span>Best cost per lead</span></div>
+      </div>
+      <div class="card tablecard">
+        <div class="tablescroll">
+          <table>
+            <caption>Top 11 campaigns, sorted by leads</caption>
+            <thead><tr><th scope="col">#</th><th scope="col">Leads</th><th scope="col">Cost / lead</th><th scope="col">Result type</th><th scope="col">Spend</th><th scope="col">Reach</th><th scope="col">Impressions</th></tr></thead>
+            <tbody>
+              <tr><td>01</td><td>730</td><td>6.48</td><td>Leads (form)</td><td>4,732.58</td><td>219,977</td><td>732,953</td></tr>
+              <tr><td>02</td><td>419</td><td>13.46</td><td>Conversion leads</td><td>5,639.38</td><td>78,184</td><td>234,531</td></tr>
+              <tr><td>03</td><td>377</td><td>15.77</td><td>Leads (form)</td><td>5,946.07</td><td>296,158</td><td>514,814</td></tr>
+              <tr><td>04</td><td>365</td><td>9.78</td><td>Conversion leads</td><td>3,569.00</td><td>120,274</td><td>373,000</td></tr>
+              <tr><td>05</td><td>316</td><td>15.25</td><td>Leads (form)</td><td>4,817.95</td><td>164,071</td><td>306,416</td></tr>
+              <tr><td>06</td><td>250</td><td>13.69</td><td>Leads (form)</td><td>3,421.91</td><td>278,556</td><td>578,203</td></tr>
+              <tr><td>07</td><td>216</td><td>29.80</td><td>Leads (form)</td><td>6,436.00</td><td>137,815</td><td>279,004</td></tr>
+              <tr><td>08</td><td>210</td><td>52.75</td><td>Conversion leads</td><td>11,077.15</td><td>80,905</td><td>220,687</td></tr>
+              <tr><td>09</td><td>207</td><td>53.71</td><td>Leads (form)</td><td>11,117.78</td><td>141,129</td><td>317,236</td></tr>
+              <tr><td>10</td><td>196</td><td>16.64</td><td>Leads (form)</td><td>3,262.32</td><td>379,188</td><td>626,138</td></tr>
+              <tr><td>11</td><td>196</td><td>168.04</td><td>Leads (form)</td><td>32,936.00</td><td>120,567</td><td>288,989</td></tr>
+            </tbody>
+            <tfoot><tr><td>Total</td><td>5,364</td><td>43.75</td><td>Multiple</td><td>234,688.78</td><td>4,727,354</td><td>10,212,676</td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+      <p class="caption muted" style="margin-top:var(--sm)">All currency in AED · frequency 2.16 across 4.7M accounts reached</p>
+    </div>
   </div>
-  <p class="prose" data-anim style="max-width:58ch">Figures below are read straight from the platform reporting — Meta Ads Manager, Google Ads, Klaviyo and the client CRM. Campaign names are withheld; every other column is as exported.</p>
+</section>
 
-  <!-- Meta lead gen -->
-  <article class="case" data-anim>
-    <div class="case-head">
-      <span class="mono">Meta Ads</span>
-      <h3>Lead generation at scale</h3>
-      <span class="src">Ads view · lifetime</span>
+<!-- ===================== RESULTS: E-COMMERCE ===================== -->
+<section class="tile tile-light">
+  <div class="inner">
+    <div class="tile-head center" data-anim>
+      <p class="overline">Meta Ads</p>
+      <h2 class="display-lg">E-commerce scaling.</h2>
+      <p class="lead muted">Eleven ad sets, all profitable. 2.24× blended.</p>
     </div>
-    <div class="kpis">
-      <div class="kpi"><b class="num" data-count="5364">5,364</b><span class="mono">Leads</span></div>
-      <div class="kpi"><b class="num" data-count="43.75" data-dec="2" data-prefix="AED ">AED 43.75</b><span class="mono">Cost per lead</span></div>
-      <div class="kpi"><b class="num" data-count="234689" data-prefix="AED ">AED 234,689</b><span class="mono">Spend</span></div>
-      <div class="kpi"><b class="num" data-count="10.2" data-dec="1" data-suffix="M">10.2M</b><span class="mono">Impressions</span></div>
-      <div class="kpi up"><b class="num" data-count="6.48" data-dec="2" data-prefix="AED ">AED 6.48</b><span class="mono">Best cost per lead</span></div>
+    <div data-anim>
+      <div class="kpis">
+        <div class="kpi accent"><b class="num" data-count="2.24" data-dec="2" data-suffix="×">2.24×</b><span>Blended purchase ROAS</span></div>
+        <div class="kpi"><b class="num" data-count="54480" data-prefix="AED ">AED 54,480</b><span>Spend</span></div>
+        <div class="kpi"><b class="num" data-count="2992">2,992</b><span>Adds to cart</span></div>
+        <div class="kpi"><b class="num" data-count="1780">1,780</b><span>Checkouts initiated</span></div>
+        <div class="kpi"><b class="num" data-count="495171" data-prefix="AED ">AED 495,171</b><span>Checkout value</span></div>
+      </div>
+      <div class="bars">
+        <div class="beq" aria-hidden="true"><u></u><b>1.00× breakeven</b></div>
+        <div class="bar hi"><span class="i">01</span><span class="t"><i style="--w:.888"></i></span><span class="v">3.55×</span></div>
+        <div class="bar"><span class="i">02</span><span class="t"><i style="--w:.875"></i></span><span class="v">3.50×</span></div>
+        <div class="bar"><span class="i">03</span><span class="t"><i style="--w:.840"></i></span><span class="v">3.36×</span></div>
+        <div class="bar"><span class="i">04</span><span class="t"><i style="--w:.838"></i></span><span class="v">3.35×</span></div>
+        <div class="bar"><span class="i">05</span><span class="t"><i style="--w:.835"></i></span><span class="v">3.34×</span></div>
+        <div class="bar"><span class="i">06</span><span class="t"><i style="--w:.775"></i></span><span class="v">3.10×</span></div>
+        <div class="bar"><span class="i">07</span><span class="t"><i style="--w:.750"></i></span><span class="v">3.00×</span></div>
+        <div class="bar"><span class="i">08</span><span class="t"><i style="--w:.733"></i></span><span class="v">2.93×</span></div>
+        <div class="bar"><span class="i">09</span><span class="t"><i style="--w:.718"></i></span><span class="v">2.87×</span></div>
+        <div class="bar"><span class="i">10</span><span class="t"><i style="--w:.698"></i></span><span class="v">2.79×</span></div>
+        <div class="bar"><span class="i">11</span><span class="t"><i style="--w:.638"></i></span><span class="v">2.55×</span></div>
+      </div>
+      <p class="caption muted">Purchase ROAS by ad set · scale 0–4× · 626 payment details added at AED 87.03 each</p>
     </div>
-    <div class="tblwrap">
-      <table>
-        <caption class="mono" style="text-align:left;color:var(--fg-dim);padding-bottom:14px">Top 11 campaigns, sorted by leads</caption>
-        <thead><tr><th scope="col">#</th><th scope="col">Leads</th><th scope="col">Cost / lead</th><th scope="col">Result type</th><th scope="col">Spend</th><th scope="col">Reach</th><th scope="col">Impressions</th></tr></thead>
-        <tbody>
-          <tr><td class="idx">01</td><td>730</td><td>6.48</td><td class="tag">Leads (form)</td><td>4,732.58</td><td>219,977</td><td>732,953</td></tr>
-          <tr><td class="idx">02</td><td>419</td><td>13.46</td><td class="tag">Conversion leads</td><td>5,639.38</td><td>78,184</td><td>234,531</td></tr>
-          <tr><td class="idx">03</td><td>377</td><td>15.77</td><td class="tag">Leads (form)</td><td>5,946.07</td><td>296,158</td><td>514,814</td></tr>
-          <tr><td class="idx">04</td><td>365</td><td>9.78</td><td class="tag">Conversion leads</td><td>3,569.00</td><td>120,274</td><td>373,000</td></tr>
-          <tr><td class="idx">05</td><td>316</td><td>15.25</td><td class="tag">Leads (form)</td><td>4,817.95</td><td>164,071</td><td>306,416</td></tr>
-          <tr><td class="idx">06</td><td>250</td><td>13.69</td><td class="tag">Leads (form)</td><td>3,421.91</td><td>278,556</td><td>578,203</td></tr>
-          <tr><td class="idx">07</td><td>216</td><td>29.80</td><td class="tag">Leads (form)</td><td>6,436.00</td><td>137,815</td><td>279,004</td></tr>
-          <tr><td class="idx">08</td><td>210</td><td>52.75</td><td class="tag">Conversion leads</td><td>11,077.15</td><td>80,905</td><td>220,687</td></tr>
-          <tr><td class="idx">09</td><td>207</td><td>53.71</td><td class="tag">Leads (form)</td><td>11,117.78</td><td>141,129</td><td>317,236</td></tr>
-          <tr><td class="idx">10</td><td>196</td><td>16.64</td><td class="tag">Leads (form)</td><td>3,262.32</td><td>379,188</td><td>626,138</td></tr>
-          <tr><td class="idx">11</td><td>196</td><td>168.04</td><td class="tag">Leads (form)</td><td>32,936.00</td><td>120,567</td><td>288,989</td></tr>
-        </tbody>
-        <tfoot><tr><td class="lbl">Account total</td><td>5,364</td><td>43.75</td><td class="tag">Multiple</td><td>234,688.78</td><td>4,727,354</td><td>10,212,676</td></tr></tfoot>
-      </table>
-    </div>
-    <p class="mono" style="color:var(--fg-dim);margin-top:14px">All currency in AED · Frequency 2.16 across 4.7M accounts reached</p>
-  </article>
+  </div>
+</section>
 
-  <!-- Meta ecommerce -->
-  <article class="case" data-anim>
-    <div class="case-head">
-      <span class="mono">Meta Ads</span>
-      <h3>E-commerce scaling</h3>
-      <span class="src">Ad sets · sorted by ROAS</span>
+<!-- ===================== RESULTS: GOOGLE ADS ===================== -->
+<section class="tile tile-parchment">
+  <div class="inner">
+    <div class="tile-head center" data-anim>
+      <p class="overline">Google Ads</p>
+      <h2 class="display-lg">Search &amp; shopping returns.</h2>
+      <p class="lead muted">Four reporting windows, conversion value against cost.</p>
     </div>
-    <div class="kpis">
-      <div class="kpi up"><b class="num" data-count="2.24" data-dec="2" data-suffix="×">2.24×</b><span class="mono">Blended purchase ROAS</span></div>
-      <div class="kpi"><b class="num" data-count="54480" data-prefix="AED ">AED 54,480</b><span class="mono">Spend</span></div>
-      <div class="kpi"><b class="num" data-count="2992">2,992</b><span class="mono">Adds to cart</span></div>
-      <div class="kpi"><b class="num" data-count="1780">1,780</b><span class="mono">Checkouts initiated</span></div>
-      <div class="kpi"><b class="num" data-count="495171" data-prefix="AED ">AED 495,171</b><span class="mono">Checkout value</span></div>
-    </div>
-    <div class="bars">
-      <div class="beq" aria-hidden="true"><u></u><b>1.00× breakeven</b></div>
-      <div class="bar hi"><span class="i">01</span><span class="t"><i style="--w:.888"></i></span><span class="v">3.55×</span></div>
-      <div class="bar"><span class="i">02</span><span class="t"><i style="--w:.875"></i></span><span class="v">3.50×</span></div>
-      <div class="bar"><span class="i">03</span><span class="t"><i style="--w:.840"></i></span><span class="v">3.36×</span></div>
-      <div class="bar"><span class="i">04</span><span class="t"><i style="--w:.838"></i></span><span class="v">3.35×</span></div>
-      <div class="bar"><span class="i">05</span><span class="t"><i style="--w:.835"></i></span><span class="v">3.34×</span></div>
-      <div class="bar"><span class="i">06</span><span class="t"><i style="--w:.775"></i></span><span class="v">3.10×</span></div>
-      <div class="bar"><span class="i">07</span><span class="t"><i style="--w:.750"></i></span><span class="v">3.00×</span></div>
-      <div class="bar"><span class="i">08</span><span class="t"><i style="--w:.733"></i></span><span class="v">2.93×</span></div>
-      <div class="bar"><span class="i">09</span><span class="t"><i style="--w:.718"></i></span><span class="v">2.87×</span></div>
-      <div class="bar"><span class="i">10</span><span class="t"><i style="--w:.698"></i></span><span class="v">2.79×</span></div>
-      <div class="bar"><span class="i">11</span><span class="t"><i style="--w:.638"></i></span><span class="v">2.55×</span></div>
-    </div>
-    <p class="mono" style="color:var(--fg-dim);margin-top:6px">Purchase ROAS by ad set · scale 0–4× · 626 payment details added at AED 87.03 each</p>
-  </article>
-
-  <!-- Google Ads -->
-  <article class="case" data-anim>
-    <div class="case-head">
-      <span class="mono">Google Ads</span>
-      <h3>Search &amp; shopping returns</h3>
-      <span class="src">Four reporting windows</span>
-    </div>
-    <div class="split">
-      <div class="acct stag" style="--i:0">
-        <span class="mono">Sep 1 – 30, 2024</span>
-        <div class="r"><b class="num" data-count="15.73" data-dec="2" data-suffix="×">15.73×</b><span>conv. value / cost</span></div>
+    <div class="cardgrid" data-anim>
+      <div class="card">
+        <p class="caption muted">Sep 1 – 30, 2024</p>
+        <div class="roas"><b class="num" data-count="15.73" data-dec="2" data-suffix="×">15.73×</b><span>value / cost</span></div>
         <dl><dt>Sales</dt><dd>19.8K</dd><dt>Cost</dt><dd>$1.26K</dd><dt>Conversions</dt><dd>210.00</dd><dt>Window</dt><dd>30 days</dd></dl>
       </div>
-      <div class="acct stag" style="--i:1">
-        <span class="mono">Aug 1 – 31, 2024</span>
-        <div class="r"><b class="num" data-count="14.19" data-dec="2" data-suffix="×">14.19×</b><span>conv. value / cost</span></div>
+      <div class="card">
+        <p class="caption muted">Aug 1 – 31, 2024</p>
+        <div class="roas"><b class="num" data-count="14.19" data-dec="2" data-suffix="×">14.19×</b><span>value / cost</span></div>
         <dl><dt>Sales</dt><dd>17.3K</dd><dt>Cost</dt><dd>$1.22K</dd><dt>Conversions</dt><dd>207.60</dd><dt>Window</dt><dd>31 days</dd></dl>
       </div>
-      <div class="acct stag" style="--i:2">
-        <span class="mono">May 1 – 11, 2025</span>
-        <div class="r"><b class="num" data-count="10.98" data-dec="2" data-suffix="×">10.98×</b><span>conv. value / cost</span></div>
+      <div class="card">
+        <p class="caption muted">May 1 – 11, 2025</p>
+        <div class="roas"><b class="num" data-count="10.98" data-dec="2" data-suffix="×">10.98×</b><span>value / cost</span></div>
         <dl><dt>Sales</dt><dd>5.12K</dd><dt>Cost</dt><dd>$466</dd><dt>Conversions</dt><dd>43.42</dd><dt>Window</dt><dd>11 days</dd></dl>
       </div>
-      <div class="acct stag" style="--i:3">
-        <span class="mono">Dec 1 – 31, 2024</span>
-        <div class="r"><b class="num" data-count="7.58" data-dec="2" data-suffix="×">7.58×</b><span>conv. value / cost</span></div>
+      <div class="card">
+        <p class="caption muted">Dec 1 – 31, 2024</p>
+        <div class="roas"><b class="num" data-count="7.58" data-dec="2" data-suffix="×">7.58×</b><span>value / cost</span></div>
         <dl><dt>Sales</dt><dd>1.5K</dd><dt>Cost</dt><dd>$198</dd><dt>Conversions</dt><dd>60.00</dd><dt>Window</dt><dd>31 days</dd></dl>
       </div>
     </div>
-  </article>
+  </div>
+</section>
 
-  <!-- Klaviyo -->
-  <article class="case" data-anim>
-    <div class="case-head">
-      <span class="mono">Klaviyo</span>
-      <h3>Owned-channel revenue</h3>
-      <span class="src">Apr 2025 – Apr 2026 vs. prior period</span>
+<!-- ===================== RESULTS: KLAVIYO ===================== -->
+<section class="tile tile-light">
+  <div class="inner">
+    <div class="tile-head center" data-anim>
+      <p class="overline">Klaviyo</p>
+      <h2 class="display-lg">Owned-channel revenue.</h2>
+      <p class="lead muted">Apr 2025 – Apr 2026, against the prior period.</p>
     </div>
-    <div class="split">
-      <div>
-        <div class="kpis" style="margin-bottom:6px">
-          <div class="kpi"><b class="num" data-count="34523.69" data-dec="2" data-prefix="AED ">AED 34,523.69</b><span class="mono">Placed-order conversions &nbsp;·&nbsp; <span style="color:var(--accent)">+55.09%</span></span></div>
-        </div>
-        <div class="stack">
-          <div class="sbar" role="img" aria-label="Flows 60 percent, campaigns 40 percent"><i class="b" style="flex:0 0 60%"></i><i class="a" style="flex:0 0 40%"></i></div>
-          <div class="skey"><span><s aria-hidden="true" style="background:var(--accent)"></s>Flows AED 20,694.21 · 60%</span><span><s aria-hidden="true" style="background:var(--fg)"></s>Campaigns AED 13,829.48 · 40%</span></div>
-        </div>
+    <div class="cardgrid cardgrid-2" data-anim>
+      <div class="card">
+        <p class="caption muted">Placed-order conversions</p>
+        <div class="roas"><b class="num" data-count="34523.69" data-dec="2" data-prefix="AED ">AED 34,523.69</b><span>+55.09%</span></div>
+        <div class="sbar" role="img" aria-label="Flows 60 percent, campaigns 40 percent"><i class="a" style="flex:0 0 60%"></i><i class="b" style="flex:0 0 40%"></i></div>
+        <div class="skey"><span><i style="background:var(--primary)"></i>Flows AED 20,694.21 · 60%</span><span><i style="background:rgba(29,29,31,.22)"></i>Campaigns AED 13,829.48 · 40%</span></div>
       </div>
-      <div>
-        <div class="kpis" style="margin-bottom:6px">
-          <div class="kpi"><b class="num" data-count="147288.50" data-dec="2" data-prefix="AED ">AED 147,288.50</b><span class="mono">Added-to-cart conversions &nbsp;·&nbsp; <span style="color:var(--accent)">+141.43%</span></span></div>
-        </div>
-        <div class="stack">
-          <div class="sbar" role="img" aria-label="Campaigns 55 percent, flows 45 percent"><i class="a" style="flex:0 0 55%"></i><i class="b" style="flex:0 0 45%"></i></div>
-          <div class="skey"><span><s aria-hidden="true" style="background:var(--fg)"></s>Campaigns AED 80,743.20 · 55%</span><span><s aria-hidden="true" style="background:var(--accent)"></s>Flows AED 66,545.30 · 45%</span></div>
-        </div>
+      <div class="card">
+        <p class="caption muted">Added-to-cart conversions</p>
+        <div class="roas"><b class="num" data-count="147288.50" data-dec="2" data-prefix="AED ">AED 147,288.50</b><span>+141.43%</span></div>
+        <div class="sbar" role="img" aria-label="Campaigns 55 percent, flows 45 percent"><i class="b" style="flex:0 0 55%"></i><i class="a" style="flex:0 0 45%"></i></div>
+        <div class="skey"><span><i style="background:rgba(29,29,31,.22)"></i>Campaigns AED 80,743.20 · 55%</span><span><i style="background:var(--primary)"></i>Flows AED 66,545.30 · 45%</span></div>
       </div>
     </div>
-    <p class="mono" style="color:var(--fg-dim);margin-top:22px">144,188 campaign recipients over the period</p>
-  </article>
-
-  <!-- CRM -->
-  <article class="case" data-anim>
-    <div class="case-head">
-      <span class="mono">CRM</span>
-      <h3>UAE real estate lead closings</h3>
-      <span class="src">Contacted-lead status</span>
-    </div>
-    <div class="kpis">
-      <div class="kpi"><b class="num" data-count="14743">14,743</b><span class="mono">Leads contacted</span></div>
-      <div class="kpi"><b class="num" data-count="75">75</b><span class="mono">Deals closed</span></div>
-      <div class="kpi up"><b class="num" data-count="81317569" data-prefix="AED ">AED 81,317,569</b><span class="mono">Value of closed deals</span></div>
-    </div>
-    <div class="donut">
-      <svg viewBox="0 0 200 200" role="img" aria-label="Lead status breakdown of 14,743 contacted leads">
-        <circle cx="100" cy="100" r="70" fill="none" stroke="var(--rule-soft)" stroke-width="26"></circle>
-        <g class="rings">
-          <circle class="ring" cx="100" cy="100" r="70" stroke="#8A8579" stroke-width="26" fill="none" stroke-dasharray="221.59 218.23" stroke-dashoffset="0"></circle>
-          <circle class="ring" cx="100" cy="100" r="70" stroke="#B07C24" stroke-width="26" fill="none" stroke-dasharray="134.96 304.87" stroke-dashoffset="-222.79"></circle>
-          <circle class="ring" cx="100" cy="100" r="70" stroke="#5F6B5A" stroke-width="26" fill="none" stroke-dasharray="25.14 414.68" stroke-dashoffset="-358.95"></circle>
-          <circle class="ring" cx="100" cy="100" r="70" stroke="#C9A15A" stroke-width="26" fill="none" stroke-dasharray="21.56 418.26" stroke-dashoffset="-385.29"></circle>
-          <circle class="ring" cx="100" cy="100" r="70" stroke="#A8A296" stroke-width="26" fill="none" stroke-dasharray="11.57 428.25" stroke-dashoffset="-408.05"></circle>
-          <circle class="ring" cx="100" cy="100" r="70" stroke="#6E6862" stroke-width="26" fill="none" stroke-dasharray="10.73 429.09" stroke-dashoffset="-420.82"></circle>
-          <circle class="ring" cx="100" cy="100" r="70" stroke="#4F5A52" stroke-width="26" fill="none" stroke-dasharray="3.63 436.19" stroke-dashoffset="-432.75"></circle>
-          <circle class="ring" cx="100" cy="100" r="70" stroke="var(--fg)" stroke-width="26" fill="none" stroke-dasharray="1.04 438.79" stroke-dashoffset="-437.59"></circle>
-        </g>
-        <text class="dcenter" x="100" y="96" text-anchor="middle" font-size="25" fill="var(--fg)">14,743</text>
-        <text x="100" y="116" text-anchor="middle" font-size="9" letter-spacing="1.6" fill="var(--fg-dim)" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace">CONTACTED</text>
-      </svg>
-      <ul class="legend">
-        <li><s aria-hidden="true" style="background:#8A8579"></s>Did not respond <em>7,468 · 50.7%</em></li>
-        <li><s aria-hidden="true" style="background:#B07C24"></s>Unqualified <em>4,564 · 31.0%</em></li>
-        <li><s aria-hidden="true" style="background:#5F6B5A"></s>Future prospect <em>883 · 6.0%</em></li>
-        <li><s aria-hidden="true" style="background:#C9A15A"></s>Qualified <em>763 · 5.2%</em></li>
-        <li><s aria-hidden="true" style="background:#A8A296"></s>Lost deals <em>428 · 2.9%</em></li>
-        <li><s aria-hidden="true" style="background:#6E6862"></s>Processing <em>400 · 2.7%</em></li>
-        <li><s aria-hidden="true" style="background:#4F5A52"></s>Working deals <em>162 · 1.1%</em></li>
-        <li><s aria-hidden="true" style="background:var(--fg)"></s>Deals closed <em>75 · 0.5%</em></li>
-      </ul>
-    </div>
-  </article>
-</section>
-
-<!-- ==================== PRODUCTION ==================== -->
-<section class="wrap">
-  <div class="sec-head" data-anim>
-    <span class="mono">06 — Production</span>
-    <h2>Full media productions</h2>
-  </div>
-  <p class="prose" data-anim style="max-width:56ch;margin-bottom:36px">Creative direction doesn't stop at the brief. I run the shoot — interview sets, event floor coverage and the edit — for Fortune 500 clients and their agencies.</p>
-  <div class="shots">
-    <figure class="shot" style="margin:0" data-anim data-par="0.04">
-      <img src="work-zoom.jpg" alt="Two-camera interview set at a Zoom brand activation">
-      <figcaption><b>Interview set</b><span class="mono">Dual-camera package, brand activation</span></figcaption>
-    </figure>
-    <figure class="shot" style="margin:0" data-anim data-par="0.07">
-      <img src="work-cnbc.jpg" alt="On-camera broadcast segment recorded on a technology expo floor">
-      <figcaption><b>Expo floor</b><span class="mono">On-camera segment, broadcast crew</span></figcaption>
-    </figure>
+    <p class="caption muted center" style="margin-top:var(--lg)">144,188 campaign recipients over the period</p>
   </div>
 </section>
 
-<!-- ==================== CREDENTIALS ==================== -->
-<section id="credentials" class="wrap">
-  <div class="sec-head" data-anim>
-    <span class="mono">07 — Credentials</span>
-    <h2>Licences &amp; bodies</h2>
-  </div>
-  <p class="prose" data-anim style="max-width:54ch;margin-bottom:40px">MSc in AI (reading) · MBA (UK) · ACIM (UK) · PgDip.M (UK) · AMSLIM (SL) · CLSSWB · BM (Hons) in Marketing, First Class (HCBT, SL)</p>
-  <div class="badges" data-anim>
-    <figure class="badge stag" style="--i:0;margin:0"><img src="badge-meta-dma.webp" alt=""><span>Meta Certified Digital Marketing Associate</span></figure>
-    <figure class="badge stag" style="--i:1;margin:0"><img src="badge-meta-creative.webp" alt=""><span>Meta Certified Creative Strategy Professional</span></figure>
-    <figure class="badge stag" style="--i:2;margin:0"><img src="badge-meta-smm.webp" alt=""><span>Meta / Coursera Social Media Marketing</span></figure>
-    <figure class="badge stag" style="--i:3;margin:0"><img src="badge-cim-global.webp" alt=""><span>CIM L7 Global Marketing Decisions</span></figure>
-    <figure class="badge stag" style="--i:4;margin:0"><img src="badge-cim-entrepreneurial.webp" alt=""><span>CIM L7 Creating Entrepreneurial Change</span></figure>
-    <figure class="badge stag" style="--i:5;margin:0"><img src="badge-cim-corporate.webp" alt=""><span>CIM L7 Corporate Digital Communications</span></figure>
-  </div>
-  <div class="cred-sub">
-    <div class="sec-head" data-anim><span class="mono">Professional bodies</span></div>
-    <div class="badges" data-anim>
-      <figure class="badge stag" style="--i:0;margin:0"><img src="badge-cim-acim.webp" alt=""><span>ACIM — Chartered Institute of Marketing</span></figure>
-      <figure class="badge stag" style="--i:1;margin:0"><img src="badge-apidm.webp" alt=""><span>APIDM Qualified — Professional Diploma in Digital Marketing</span></figure>
-      <figure class="badge stag" style="--i:2;margin:0"><img src="badge-cim-pgdip.webp" alt=""><span>CIM L7 Postgraduate Diploma in Professional Marketing</span></figure>
-      <figure class="badge stag" style="--i:3;margin:0"><img src="badge-slim.webp" alt=""><span>SLIM Associate Member</span></figure>
+<!-- ===================== RESULTS: CRM ===================== -->
+<section class="tile tile-parchment">
+  <div class="inner">
+    <div class="tile-head center" data-anim>
+      <p class="overline">CRM</p>
+      <h2 class="display-lg">UAE real estate lead closings.</h2>
+      <p class="lead muted">14,743 leads contacted. 75 closed, at AED 81.3M in deal value.</p>
     </div>
-  </div>
-</section>
-
-<!-- ==================== CONTACT ==================== -->
-<section id="contact" class="contact">
-  <div class="wrap">
-    <div class="two" style="align-items:end">
-      <div data-anim>
-        <span class="mono" style="color:var(--accent-2)">08 — Contact</span>
-        <h2 class="d2" style="margin-top:18px">Let's work together.</h2>
-        <ul class="clist">
-          <li><a href="https://wa.me/971529127002" target="_blank" rel="noopener noreferrer"><span class="mono">WhatsApp</span><span class="val num">+971 52 912 7002</span><span class="arw">↗</span></a></li>
-          <li><a href="https://wa.me/94716433747" target="_blank" rel="noopener noreferrer"><span class="mono">WhatsApp</span><span class="val num">+94 71 643 3747</span><span class="arw">↗</span></a></li>
-          <li><a href="mailto:isurupm1997@gmail.com"><span class="mono">Email</span><span class="val">isurupm1997@gmail.com</span><span class="arw">↗</span></a></li>
-          <li><a href="mailto:isuru.marasinghe@outlook.com"><span class="mono">Email</span><span class="val">isuru.marasinghe@outlook.com</span><span class="arw">↗</span></a></li>
-          <li><a href="https://www.linkedin.com/in/isuru-marasinghe/" target="_blank" rel="noopener noreferrer"><span class="mono">LinkedIn</span><span class="val">/in/isuru-marasinghe</span><span class="arw">↗</span></a></li>
+    <div class="card" data-anim>
+      <div class="kpis" style="margin-bottom:var(--lg)">
+        <div class="kpi"><b class="num" data-count="14743">14,743</b><span>Leads contacted</span></div>
+        <div class="kpi"><b class="num" data-count="75">75</b><span>Deals closed</span></div>
+        <div class="kpi accent"><b class="num" data-count="81317569" data-prefix="AED ">AED 81,317,569</b><span>Value of closed deals</span></div>
+      </div>
+      <div class="donutwrap">
+        <svg viewBox="0 0 200 200" role="img" aria-label="Lead status breakdown of 14,743 contacted leads">
+          <circle cx="100" cy="100" r="70" fill="none" stroke="#f0f0f0" stroke-width="26"></circle>
+          <g class="rings">
+            <circle cx="100" cy="100" r="70" stroke="#d2d2d7" stroke-width="26" fill="none" stroke-dasharray="221.59 218.23" stroke-dashoffset="0"></circle>
+            <circle cx="100" cy="100" r="70" stroke="#aeaeb4" stroke-width="26" fill="none" stroke-dasharray="134.96 304.87" stroke-dashoffset="-222.79"></circle>
+            <circle cx="100" cy="100" r="70" stroke="#8a8a90" stroke-width="26" fill="none" stroke-dasharray="25.14 414.68" stroke-dashoffset="-358.95"></circle>
+            <circle cx="100" cy="100" r="70" stroke="#6e6e74" stroke-width="26" fill="none" stroke-dasharray="21.56 418.26" stroke-dashoffset="-385.29"></circle>
+            <circle cx="100" cy="100" r="70" stroke="#5a5a60" stroke-width="26" fill="none" stroke-dasharray="11.57 428.25" stroke-dashoffset="-408.05"></circle>
+            <circle cx="100" cy="100" r="70" stroke="#46464c" stroke-width="26" fill="none" stroke-dasharray="10.73 429.09" stroke-dashoffset="-420.82"></circle>
+            <circle cx="100" cy="100" r="70" stroke="#1d1d1f" stroke-width="26" fill="none" stroke-dasharray="3.63 436.19" stroke-dashoffset="-432.75"></circle>
+            <circle cx="100" cy="100" r="70" stroke="#0066cc" stroke-width="26" fill="none" stroke-dasharray="1.04 438.79" stroke-dashoffset="-437.59"></circle>
+          </g>
+          <text x="100" y="97" text-anchor="middle" font-size="24" font-weight="600" letter-spacing="-0.5" fill="#1d1d1f">14,743</text>
+          <text x="100" y="116" text-anchor="middle" font-size="10" fill="#7a7a7a">contacted</text>
+        </svg>
+        <ul class="legend">
+          <li><i style="background:#d2d2d7"></i>Did not respond <em>7,468 · 50.7%</em></li>
+          <li><i style="background:#aeaeb4"></i>Unqualified <em>4,564 · 31.0%</em></li>
+          <li><i style="background:#8a8a90"></i>Future prospect <em>883 · 6.0%</em></li>
+          <li><i style="background:#6e6e74"></i>Qualified <em>763 · 5.2%</em></li>
+          <li><i style="background:#5a5a60"></i>Lost deals <em>428 · 2.9%</em></li>
+          <li><i style="background:#46464c"></i>Processing <em>400 · 2.7%</em></li>
+          <li><i style="background:#1d1d1f"></i>Working deals <em>162 · 1.1%</em></li>
+          <li><i style="background:#0066cc"></i>Deals closed <em>75 · 0.5%</em></li>
         </ul>
       </div>
-      <figure class="portrait tint" style="margin:0" data-anim data-par="0.05">
-        <img src="me-contact.jpg" alt="Isuru Marasinghe">
-      </figure>
     </div>
-    <hr class="rule" style="margin-top:clamp(48px,7vw,80px)">
-    <footer>
-      <span class="mono">Isuru Marasinghe — Digital Marketing Portfolio</span>
-      <span class="mono dot">© 2026 · All rights reserved</span>
-    </footer>
   </div>
 </section>
+
+<!-- ===================== PRODUCTION ===================== -->
+<section id="production" class="tile tile-dark-2">
+  <div class="inner">
+    <div class="tile-head center" data-anim>
+      <h2 class="display-lg">Full media productions.</h2>
+      <p class="lead muted" style="max-width:46ch;margin-inline:auto">Creative direction doesn't stop at the brief. I run the shoot — interview sets, event floor coverage and the edit — for Fortune 500 clients and their agencies.</p>
+    </div>
+    <div class="shots">
+      <figure class="shot" style="margin:0" data-anim data-par="0.035">
+        <img class="render" src="work-zoom.jpg" alt="Two-camera interview set at a Zoom brand activation">
+        <figcaption><b>Interview set</b><span>Dual-camera package, brand activation</span></figcaption>
+      </figure>
+      <figure class="shot" style="margin:0" data-anim data-par="0.06">
+        <img class="render" src="work-cnbc.jpg" alt="On-camera broadcast segment recorded on a technology expo floor">
+        <figcaption><b>Expo floor</b><span>On-camera segment, broadcast crew</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CREDENTIALS ===================== -->
+<section id="credentials" class="tile tile-light">
+  <div class="inner">
+    <div class="tile-head center" data-anim>
+      <h2 class="display-lg">Licences &amp; bodies.</h2>
+      <p class="lead muted">Certified by Meta and the Chartered Institute of Marketing.</p>
+    </div>
+    <div class="badges" data-anim>
+      <figure class="badge"><img src="badge-meta-dma.webp" alt=""><figcaption>Meta Certified Digital Marketing Associate</figcaption></figure>
+      <figure class="badge"><img src="badge-meta-creative.webp" alt=""><figcaption>Meta Certified Creative Strategy Professional</figcaption></figure>
+      <figure class="badge"><img src="badge-meta-smm.webp" alt=""><figcaption>Meta / Coursera Social Media Marketing</figcaption></figure>
+      <figure class="badge"><img src="badge-cim-global.webp" alt=""><figcaption>CIM L7 Global Marketing Decisions</figcaption></figure>
+      <figure class="badge"><img src="badge-cim-entrepreneurial.webp" alt=""><figcaption>CIM L7 Creating Entrepreneurial Change</figcaption></figure>
+      <figure class="badge"><img src="badge-cim-corporate.webp" alt=""><figcaption>CIM L7 Corporate Digital Communications</figcaption></figure>
+    </div>
+    <p class="caption-strong center" style="margin:var(--xxl) 0 var(--lg)">Professional bodies</p>
+    <div class="badges" data-anim>
+      <figure class="badge"><img src="badge-cim-acim.webp" alt=""><figcaption>ACIM — Chartered Institute of Marketing</figcaption></figure>
+      <figure class="badge"><img src="badge-apidm.webp" alt=""><figcaption>APIDM Qualified — Professional Diploma in Digital Marketing</figcaption></figure>
+      <figure class="badge"><img src="badge-cim-pgdip.webp" alt=""><figcaption>CIM L7 Postgraduate Diploma in Professional Marketing</figcaption></figure>
+      <figure class="badge"><img src="badge-slim.webp" alt=""><figcaption>SLIM Associate Member</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" class="tile tile-dark">
+  <div class="inner contactgrid">
+    <div data-anim>
+      <h2 class="display-lg">Let's work together.</h2>
+      <p class="lead-airy muted" style="margin-top:var(--md);max-width:38ch">Tell me the target cost per acquisition. I'll tell you what the creative has to do to get there.</p>
+      <ul class="clist">
+        <li><a href="https://wa.me/971529127002" target="_blank" rel="noopener noreferrer"><span class="k">WhatsApp</span><span class="v num">+971 52 912 7002</span><span class="go">&rsaquo;</span></a></li>
+        <li><a href="https://wa.me/94716433747" target="_blank" rel="noopener noreferrer"><span class="k">WhatsApp</span><span class="v num">+94 71 643 3747</span><span class="go">&rsaquo;</span></a></li>
+        <li><a href="mailto:isurupm1997@gmail.com"><span class="k">Email</span><span class="v">isurupm1997@gmail.com</span><span class="go">&rsaquo;</span></a></li>
+        <li><a href="mailto:isuru.marasinghe@outlook.com"><span class="k">Email</span><span class="v">isuru.marasinghe@outlook.com</span><span class="go">&rsaquo;</span></a></li>
+        <li><a href="https://www.linkedin.com/in/isuru-marasinghe/" target="_blank" rel="noopener noreferrer"><span class="k">LinkedIn</span><span class="v">/in/isuru-marasinghe</span><span class="go">&rsaquo;</span></a></li>
+      </ul>
+      <div class="ctas" style="justify-content:flex-start;margin-top:var(--xl)">
+        <a class="btn btn-lg" href="mailto:isurupm1997@gmail.com">Start a project</a>
+        <a class="btn btn-lg btn-ghost-dark" href="https://wa.me/971529127002" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a>
+      </div>
+    </div>
+    <div class="shotcol" data-anim data-par="0.04">
+      <figure class="render" style="margin:0"><img src="me-contact.jpg" alt="Isuru Marasinghe" width="537" height="672"></figure>
+    </div>
+  </div>
+</section>
+
 </main>
+
+<footer>
+  <div class="footcols">
+    <div>
+      <h4>Portfolio</h4>
+      <ul>
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#practice">Core expertise</a></li>
+        <li><a href="#clients">Clients</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Results</h4>
+      <ul>
+        <li><a href="#results">Meta lead generation</a></li>
+        <li><a href="#results">E-commerce scaling</a></li>
+        <li><a href="#production">Media production</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Disciplines</h4>
+      <ul>
+        <li>Creative direction</li>
+        <li>Paid media management</li>
+        <li>Analytics &amp; tracking</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:isurupm1997@gmail.com">isurupm1997@gmail.com</a></li>
+        <li><a href="https://wa.me/971529127002" target="_blank" rel="noopener noreferrer">+971 52 912 7002</a></li>
+        <li><a href="https://www.linkedin.com/in/isuru-marasinghe/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footlegal fine">
+    <span>Isuru Marasinghe — Digital Marketing Portfolio</span>
+    <span>Figures as reported by Meta Ads Manager, Google Ads, Klaviyo and the client CRM.</span>
+    <span class="end">© 2026 All rights reserved</span>
+  </div>
+</footer>
 
 <script>
 (function(){
   document.documentElement.classList.add('js');
   var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- reveal only what is below the first screen ---------- */
+  /* reveal only what starts below the first screen */
   var anim = Array.prototype.slice.call(document.querySelectorAll('[data-anim]'));
   if(!RM && 'IntersectionObserver' in window){
     var below = anim.filter(function(el){ return el.getBoundingClientRect().top > window.innerHeight * 0.92; });
@@ -739,40 +854,29 @@ footer .dot{margin-left:auto}
     anim.forEach(count);
   }
 
-  /* ---------- number count-up ---------- */
-  var fmt = function(v, dec){
-    return v.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec});
-  };
+  function fmt(v, dec){ return v.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec}); }
   function count(scope){
     if(RM) return;
-    var els = scope.querySelectorAll('[data-count]');
-    Array.prototype.forEach.call(els, function(el){
+    Array.prototype.forEach.call(scope.querySelectorAll('[data-count]'), function(el){
       if(el.dataset.done) return; el.dataset.done = '1';
       var to = parseFloat(el.dataset.count), dec = parseInt(el.dataset.dec || '0', 10);
       var pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
       var dur = 1100, t0 = performance.now();
-      function step(t){
+      el.textContent = pre + fmt(0, dec) + suf;
+      requestAnimationFrame(function step(t){
         var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
         el.textContent = pre + fmt(to * e, dec) + suf;
         if(p < 1) requestAnimationFrame(step);
-      }
-      el.textContent = pre + fmt(0, dec) + suf;
-      requestAnimationFrame(step);
+      });
     });
   }
 
-  /* ---------- damped scroll: progress, nav, parallax ---------- */
-  var nav = document.getElementById('nav'), prog = document.getElementById('prog');
+  /* damped scroll: parallax on imagery + sub-nav current section */
   var par = Array.prototype.slice.call(document.querySelectorAll('[data-par]'));
-  var last = window.scrollY, cur = window.scrollY, raf = 0;
-  var links = Array.prototype.slice.call(document.querySelectorAll('#navlinks a'));
+  var links = Array.prototype.slice.call(document.querySelectorAll('#subnavlinks a'));
   var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
-
+  var raf = 0;
   function frame(){
-    cur += (window.scrollY - cur) * 0.12;
-    if(Math.abs(window.scrollY - cur) < 0.4) cur = window.scrollY;
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    prog.style.width = (max > 0 ? (cur / max) * 100 : 0) + '%';
     if(!RM){
       for(var i = 0; i < par.length; i++){
         var el = par[i], r = el.getBoundingClientRect();
@@ -782,15 +886,11 @@ footer .dot{margin-left:auto}
         }
       }
     }
-    var y = window.scrollY;
-    if(y > 120 && y > last + 4) nav.classList.add('up');
-    else if(y < last - 4 || y < 120) nav.classList.remove('up');
-    last = y;
     var on = -1;
     for(var j = 0; j < targets.length; j++){
-      if(targets[j] && targets[j].getBoundingClientRect().top <= window.innerHeight * 0.34) on = j;
+      if(targets[j] && targets[j].getBoundingClientRect().top <= window.innerHeight * 0.36) on = j;
     }
-    links.forEach(function(a, k){ a.classList.toggle('on', k === on); });
+    links.forEach(function(a, k){ if(k === on){ a.setAttribute('aria-current','true'); } else { a.removeAttribute('aria-current'); } });
     raf = 0;
   }
   function onScroll(){ if(!raf) raf = requestAnimationFrame(frame); }
@@ -798,20 +898,20 @@ footer .dot{margin-left:auto}
   window.addEventListener('resize', onScroll, {passive:true});
   frame();
 
-  /* ---------- eased anchor scrolling ---------- */
+  /* eased anchor scrolling under the sticky sub-nav */
   if(!RM){
     document.querySelectorAll('a[href^="#"]').forEach(function(a){
       a.addEventListener('click', function(ev){
         var el = document.querySelector(a.getAttribute('href'));
         if(!el) return;
         ev.preventDefault();
-        var start = window.scrollY, end = el.getBoundingClientRect().top + start - 64;
-        var d = Math.min(1300, 380 + Math.abs(end - start) * 0.38), t0 = performance.now();
-        (function go(t){
+        var start = window.scrollY, end = el.getBoundingClientRect().top + start - 52;
+        var d = Math.min(1300, 380 + Math.abs(end - start) * 0.36), t0 = performance.now();
+        requestAnimationFrame(function go(t){
           var p = Math.min(1, (t - t0) / d), e = p < .5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3)/2;
           window.scrollTo(0, start + (end - start) * e);
           if(p < 1) requestAnimationFrame(go);
-        })(t0);
+        });
       });
     });
   }
